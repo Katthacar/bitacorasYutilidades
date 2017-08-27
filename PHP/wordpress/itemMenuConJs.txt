@@ -1,0 +1,16 @@
+<!--script creado para ejecutar un script javascript en un menú de wordpress
+	El script invoca la ventana de chat con soporte desde un link de un menú de wordpress,
+	y se deshabilitó el botón de livezilla. info en: http://buffernow.com/javascript-in-wordpress-menus-url/ -->
+
+<script type="text/javascript">
+		jQuery.noConflict();
+		jQuery(document).ready(function(){
+			var menuID = jQuery('#menu-item-1832');//EL id menu-item-1832 se obtiene con la herramienta inspeccionar elemento del navegador
+ 
+			findA = menuID.find('a');
+ 
+			findA.click(function(event){
+			// Your Javascript Code Here
+			void(window.open('http://www.amerikati.com/liveZillaServer/chat.php','','width=590,height=610,left=0,top=0,resizable=yes,menubar=no,location=no,status=yes,scrollbars=yes'));
+			});
+		});

@@ -1,0 +1,4 @@
+* La carpeta "directory-tree original" son los archivos sin modificar.
+* El archivo "despliegueInformes" es el archivo que toma como base los 
+archivos de "directory-tree original" y se adaptó al sitio web de amerika 
+para el despliegue de informes y soluciones.

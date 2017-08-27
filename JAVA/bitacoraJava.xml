@@ -1,0 +1,100 @@
+***************************************************************************************************
+***************************************************************************************************
+************************************************************************REGISTRANDO UN SHUTDOWNHOOK
+Runtime.getRuntime().addShutdownHook(new MiShDwnHook());
+//La clase MiShDwnHook debe ser interna y heredar de Thread EJ:
+	private static class MyShDwnHook extends Thread {
+        
+        //Justo antes de terminar la app, la JVM invocará a este método
+        //para cerrar la conexión que se ha abierto
+        public void run() {
+            try{
+                Connection conexion = UConnection.getConnection();
+                conexion.close();
+            }catch(Exception ex){
+                ex.printStackTrace();
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+
+
+***************************************************************************************************
+***************************************************************************************************
+***************************************DIFERENTES FORMAS DE OBTENER OBJETO CONNECTION CON HIBERNATE
+1) session.connection() - this method is deprecated. it is not available on Hibernate4.
+2) session.doWork() - this method doesn't return Connection object, but inside what ever operation we want to do using connection object we can do. 
+3) session.doReturningWork() - this method returns dynamic type value. In the below example i am return Connection object. 
+4) SessionImpl.connection() - Down casting the Session object to SessionImpl. By using SessionImpl we will get the Connection object.
+5) ConnectionProvider.getConnection() - Using ConnectionProvider getConnection() method.
+Ejemplos:
+package com.varasofttech.client;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
+import org.hibernate.internal.SessionImpl;
+import org.hibernate.jdbc.ReturningWork;
+import org.hibernate.jdbc.Work;
+
+import com.varasofttech.util.HibernateUtil;
+
+public class Application {
+    
+    public static void main(String[] args) {
+        
+        // Different ways to get the Connection object using Session
+        
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        // Way1 - using doWork method
+        session.doWork(new Work() {
+            @Override
+            public void execute(Connection connection) throws SQLException {
+                // do your work using connection
+            }
+            
+        });
+        
+        // Way2 - using doReturningWork method
+        Connection connection = session.doReturningWork(new ReturningWork<Connection>() {
+            @Override
+            public Connection execute(Connection conn) throws SQLException {
+                return conn;
+            }
+        });
+        
+        // Way3 - using Session Impl
+        SessionImpl sessionImpl = (SessionImpl) session;
+        connection = sessionImpl.connection();
+        // do your work using connection
+        
+        // Way4 - using connection provider
+        SessionFactoryImplementor sessionFactoryImplementation = (SessionFactoryImplementor) session.getSessionFactory();
+        ConnectionProvider connectionProvider = sessionFactoryImplementation.getConnectionProvider();
+        try {
+            connection = connectionProvider.getConnection();
+            // do your work using connection
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+Link referencia: http://myjourneyonjava.blogspot.com.co/2014/12/different-ways-to-get-connection-object.html
+
+
+***************************************************************************************************
+***************************************************************************************************
+**********************************************************************SETEAR VARIABLE JAVA EN LINUX
+1) editar /etc/profile y al final del mismo agregar las sig. líneas:
+JAVA_HOME=/usr/lib/jvm/java-8-oracle
+PATH=$PATH:$JAVA_HOME/bin
+export PATH JAVA_HOME
+2) Luego para que el sistema lea los cambios ejecutar en terminal: source /etc/profile
+3) Corroborar los valores de PATH y JAVA_HOME:
+set | grep PATH
+set | grep JAVA_HOME

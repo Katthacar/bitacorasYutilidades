@@ -1,0 +1,1070 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0084)https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head profile="http://gmpg.org/xfn/11"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<title>Install PL/SQL Developer under Wine on Linux | DBA-010</title>
+	<link rel="pingback" href="https://dba010.wordpress.com/xmlrpc.php">
+	<link rel="alternate" type="application/rss+xml" title="DBA-010 » Feed" href="https://dba010.wordpress.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="DBA-010 » Comments Feed" href="https://dba010.wordpress.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="DBA-010 » Install PL/SQL Developer under Wine on Linux Comments Feed" href="https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/feed/">
+<script type="text/javascript">
+/* <![CDATA[ */
+function addLoadEvent(func){var oldonload=window.onload;if(typeof window.onload!='function'){window.onload=func;}else{window.onload=function(){oldonload();func();}}}
+/* ]]> */
+</script>
+<link rel="stylesheet" id="all-css-0" href="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/saved_resource" type="text/css" media="all">
+<link rel="stylesheet" id="print-css-1" href="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/global-print.css" type="text/css" media="print">
+<link rel="stylesheet" id="all-css-2" href="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/saved_resource(1)" type="text/css" media="all">
+<script type="text/javascript">
+/* <![CDATA[ */
+var LoggedOutFollow = {"invalid_email":"Your subscription did not succeed, please try again with a valid email address."};
+/* ]]> */
+</script><style type="text/css"></style>
+<script type="text/javascript" src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/saved_resource(2)"></script>
+<link rel="stylesheet" id="all-css-0" href="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/style.css" type="text/css" media="all">
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563g&#038;ver=20110606' type='text/css' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://dba010.wordpress.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="ORACLE BI Admintool.exe “The connection has failed”" href="https://dba010.wordpress.com/2012/08/13/oracle-bi-admintool-exe-the-connection-has-failed/">
+<link rel="next" title="Install Oracle Database 11g on Linux with ASM" href="https://dba010.wordpress.com/2012/08/16/install-oracle-database-11g-on-linux-with-asm/">
+<meta name="generator" content="WordPress.com">
+<link rel="canonical" href="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/Install PL_SQL Developer under Wine on Linux _ DBA-010.html">
+<link rel="shortlink" href="http://wp.me/p22w2S-Jz">
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/1.0/?format=json&url=https%3A%2F%2Fdba010.wordpress.com%2F2012%2F08%2F14%2Finstall-plsql-developer-under-wine-on-linux%2F&for=wpcom-auto-discovery"><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/1.0/?format=xml&url=https%3A%2F%2Fdba010.wordpress.com%2F2012%2F08%2F14%2Finstall-plsql-developer-under-wine-on-linux%2F&for=wpcom-auto-discovery">
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Install PL/SQL Developer under Wine on Linux">
+<meta property="og:url" content="https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/">
+<meta property="og:description" content="First of all, let’s install Wine. Note: when in the beginning there is # sign, means user is root and where there is $ the user is oracle. Installing Wine But if you have internet access you can ru...">
+<meta property="article:published_time" content="2012-08-14T10:26:28+00:00">
+<meta property="article:modified_time" content="2012-08-14T10:27:42+00:00">
+<meta property="og:site_name" content="DBA-010">
+<meta property="og:image" content="https://dba010.files.wordpress.com/2012/08/image_thumb3.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:site" content="@wordpressdotcom">
+<meta name="twitter:image" content="https://dba010.files.wordpress.com/2012/08/image_thumb3.png?w=240">
+<meta name="twitter:card" content="summary">
+<meta property="fb:app_id" content="249643311490">
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom">
+<link rel="shortcut icon" type="image/x-icon" href="https://s2.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48">
+<link rel="icon" type="image/x-icon" href="https://s2.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48">
+<link rel="apple-touch-icon-precomposed" href="https://s0.wp.com/i/webclip.png">
+<link rel="openid.server" href="https://dba010.wordpress.com/?openidserver=1">
+<link rel="openid.delegate" href="https://dba010.wordpress.com/">
+<link rel="search" type="application/opensearchdescription+xml" href="https://dba010.wordpress.com/osd.xml" title="DBA-010">
+<link rel="search" type="application/opensearchdescription+xml" href="https://wordpress.com/opensearch.xml" title="WordPress.com">
+
+		<style>
+			@media screen and (min-width: 783px) { 
+				#wpadminbar .quicklinks li#wp-admin-bar-my-account.with-avatar > a img { 
+					margin-top: 5px; 
+				} 
+			}
+		</style>
+
+		<meta name="application-name" content="DBA-010"><meta name="msapplication-window" content="width=device-width;height=device-height"><meta name="msapplication-tooltip" content="Oracle&amp;Linux 4ever"><meta name="msapplication-task" content="name=Subscribe;action-uri=https://dba010.wordpress.com/feed/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="title" content="Install PL/SQL Developer under Wine on Linux | DBA-010 on WordPress.com">
+<meta name="description" content="First of all, let’s install Wine. Note: when in the beginning there is # sign, means user is root and where there is $ the user is oracle. Installing Wine But if you have internet access you can run just the following : # sudo apt-get install wine Because of I don’t have internet on…">
+		<style type="text/css">
+			#header h1,
+			#header h1 a,
+			#header h1 a:visited,
+			#header h4,
+			#header h4 a,
+			#header h4 a:visited,
+			.header-left {
+				color: #333333;
+			}
+		</style>
+<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #fdfcfd; }
+</style>
+		<script type="text/javascript" src="https://c.amazon-adsystem.com/aax2/amzn_ads.js"></script>
+		<script type="text/javascript">
+		try { amznads.getAds("3033"); } catch(e) { /* ignore */ }
+		</script>
+		<script type="text/javascript">
+		var a9_p = amznads.getKeys(),
+		_ipw_custom = {
+			wordAds: '0',
+			adSafe: '0',
+			domain: 'dba010.wordpress.com',
+			pageURL: 'https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/'
+		};
+		if("undefined"!=typeof a9_p&&""!=a9_p&&null!==a9_p&&"[object Array]"===Object.prototype.toString.call(a9_p)){var a="",b=0,c=a9_p.length;a9_p.sort();for(var d=0;d<c;d++){a9_p[d-b]=a9_p[d-b].replace(/a1x6p/,"a160x600p");var e=a9_p[d-b].split("p");e[0]==a&&(a9_p.splice(d-b,1),b++);a=e[0]}_ipw_custom.amznPay=a9_p};document.close();
+		</script>		<!-- IPONWEB header script -->
+		<script type="text/javascript">
+			window.__ATA = {
+				scriptSrc: '//s.pubmine.com/showad.js',
+				slotPrefix: 'automattic-id-',
+				initAd: function(o) {
+					var o = o || {},
+						g = window,
+						d = g.document,
+						wr = d.write,
+						id = g.__ATA.id();
+					wr.call(d, '<div id="' + id + '" data-section="' + (o.sectionId || 0) + '"' + (o.type ? ('data-type="' + o.type + '"') : '') + ' ' + (o.forcedUrl ? ('data-forcedurl="' + o.forcedUrl + '"') : '') + ' style="width:' + (o.width || 0) + 'px; height:' + (o.height || 0) + 'px;">');
+					g.__ATA.displayAd(id);
+					wr.call(d, '</div>');
+				},
+				displayAd: function(id) {
+					window.__ATA.ids = window.__ATA.ids || {};
+					window.__ATA.ids[id] = 1;
+				},
+				customParams: _ipw_custom,
+				id: function() {
+					return window.__ATA.slotPrefix + (parseInt(Math.random() * 10000, 10) + 1 + (new Date()).getMilliseconds());
+				}
+			};
+			(function(d, ata) {
+				var pr = "https:" === d.location.protocol ? "https:" : "http:",
+					src = pr + ata.scriptSrc,
+					st = "text/javascript";
+				d.write('<scr' + 'ipt type="' + st + '" src="' + src + '"><\/scr' + 'ipt>');
+			})(window.document, window.__ATA);
+		</script><script type="text/javascript" src="https://s.pubmine.com/showad.js"></script>
+		<script type="text/javascript">
+		jQuery(window).ready(function () {
+			jQuery("a.wpa-about").text("About these ads");
+		});
+		</script><style type="text/css" id="syntaxhighlighteranchor"></style>
+<script type="text/javascript">
+	window.google_analytics_uacct = "UA-52447-2";
+</script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-52447-2']);
+	_gaq.push(['_setDomainName', 'wordpress.com']);
+	_gaq.push(['_initData']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	})();
+</script><script type="text/javascript" async="" src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/ga.js"></script>
+<script type="text/javascript" async="" src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/saved_resource(3)"></script><link rel="stylesheet" type="text/css" id="gravatar-card-css" href="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/hovercard.css"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/services.css"><script type="text/javascript" async="" src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/saved_resource(4)"></script></head>
+
+<body class="single single-post postid-2825 single-format-standard custom-background mp6 customizer-styles-applied highlander-enabled highlander-light">
+
+<div id="header">
+	<div class="header-left">
+					<h4><a href="https://dba010.wordpress.com/">DBA-010</a></h4>
+				<p id="description">Oracle&amp;Linux 4ever</p>
+	</div>
+	<div class="header-right">
+		<form method="get" id="searchform" action="https://dba010.wordpress.com/">
+			<div><label class="hidden" for="s">Search:</label>
+			<input type="text" value="" name="s" id="s">
+			<input type="submit" id="searchsubmit" value="Go"></div>
+		</form>
+	</div>
+</div>
+<div id="access">
+	<div id="nav">
+		<div id="supernav" class="navleft nav">
+			<div class="menu"><ul><li><a href="https://dba010.wordpress.com/">Home</a></li><li class="page_item page-item-2"><a href="https://dba010.wordpress.com/about/">About</a></li></ul></div>
+		</div>
+		<div class="navright">
+			<a class="rsslink" rel="nofollow" href="https://dba010.wordpress.com/feed/">Posts</a>
+			<a class="rsslink" rel="nofollow" href="https://dba010.wordpress.com/comments/feed/">Comments</a>
+		</div>
+	</div>
+
+	<div id="subnav" class="subnav nav">
+			<div class="menu">
+		<ul>
+				<li class="cat-item cat-item-4667"><a href="https://dba010.wordpress.com/category/db/">DB</a>
+<ul class="children">
+	<li class="cat-item cat-item-8446142"><a href="https://dba010.wordpress.com/category/db/real-world-scenarios/">Real World Scenarios</a>
+</li>
+	<li class="cat-item cat-item-505044"><a href="https://dba010.wordpress.com/category/db/rac/">RAC</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-610"><a href="https://dba010.wordpress.com/category/linux/">Linux</a>
+</li>
+	<li class="cat-item cat-item-9203"><a href="https://dba010.wordpress.com/category/unix/">Unix</a>
+</li>
+	<li class="cat-item cat-item-196"><a href="https://dba010.wordpress.com/category/programming/">Programming</a>
+<ul class="children">
+	<li class="cat-item cat-item-457"><a href="https://dba010.wordpress.com/category/programming/javascript/">JavaScript</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-6407"><a href="https://dba010.wordpress.com/category/sql-server/">SQL Server</a>
+<ul class="children">
+	<li class="cat-item cat-item-27854"><a href="https://dba010.wordpress.com/category/sql-server/reporting-services/">Reporting Services</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-1"><a href="https://dba010.wordpress.com/category/uncategorized/">Uncategorized</a>
+</li>
+		</ul>
+	</div>
+	</div>
+</div>
+
+<div id="wrap">
+<div id="content">
+
+	<div id="content-left">
+
+		
+			<div id="nav-above">
+				<div class="nav-previous"><a href="https://dba010.wordpress.com/2012/08/13/oracle-bi-admintool-exe-the-connection-has-failed/" rel="prev"><span class="meta-nav">←</span> ORACLE BI Admintool.exe “The connection has&nbsp;failed”</a></div>
+				<div class="nav-next"><a href="https://dba010.wordpress.com/2012/08/16/install-oracle-database-11g-on-linux-with-asm/" rel="next">Install Oracle Database 11g on Linux with&nbsp;ASM <span class="meta-nav">→</span></a></div>
+			</div>
+
+			<div class="post-2825 post type-post status-publish format-standard hentry category-db category-unix tag-flex tag-linux-2 tag-plsql tag-wine">
+
+				<div class="entry">
+
+					<h1>Install PL/SQL Developer under Wine on&nbsp;Linux</h1>
+
+					<div class="post-info">
+						<p>
+							<span class="time">August 14, 2012</span>
+																						<span class="post-comments"><a href="https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/#respond">Leave a comment</a></span>
+																				</p>
+					</div>
+
+					<p>First of all, let’s install Wine.</p>
+<p>Note: when in the beginning there is # sign, means user is root and where there is $ the user is oracle.</p>
+<p><strong><span style="font-size:medium;">Installing Wine</span></strong></p>
+<p>But if you have internet access you can run just the following :</p>
+<blockquote><p># sudo apt-get install wine</p></blockquote>
+<p>Because of I don’t have internet on my server, I use the following steps to install wine.</p>
+<p>0. Before installing wine you must have flex version 2.5.33 or more.</p>
+<p>Download link: <a href="http://flex.sourceforge.net/">http://flex.sourceforge.net/</a></p>
+<blockquote><p># cd flex-2.5.33<br>
+# make<br>
+# make install<br>
+# make clean<br>
+# make distclean<br>
+# flex –version</p></blockquote>
+<p>1. Download wine installation from: <a href="http://www.winehq.org/download/">http://www.winehq.org/download/</a></p>
+<p>Section: <strong>Wine Source Downloads</strong></p>
+<p>My downloaded file is named <a href="http://sourceforge.net/projects/wine/files/Source/wine-1.3.13.tar.bz2/download">wine-1.3.13.tar.bz2</a>.</p>
+<p>2. Extract</p>
+<blockquote><p># tar -jxvf wine-1.3.13.<span class="skimlinks-unlinked">tar.bz2</span><br>
+#&nbsp; cd wine-1.3.13<br>
+#&nbsp; ./configure<br>
+#&nbsp; make depend<br>
+#&nbsp; make<br>
+#&nbsp; make install</p></blockquote>
+<p>It needs some time to complete, so be patient. <span class="wp-smiley wp-emoji wp-emoji-smile" title=":)">:)</span></p>
+<p><strong><span style="font-size:medium;">Installing the Oracle Client</span></strong></p>
+<p>1. Download file from here: <a href="http://www.oracle.com/technetwork/database/features/instant-client/index-097480.html">http://www.oracle.com/technetwork/database/features/instant-client/index-097480.html</a></p>
+<p>I choose <a href="http://www.oracle.com/technetwork/topics/winsoft-085727.html">Instant Client for Microsoft Windows (32-bit)</a> and then <a name="file50" href="http://download.oracle.com/otn/nt/instantclient/112030/instantclient-basic-nt-11.2.0.3.0.zip">instantclient-basic-nt-11.2.0.3.0.zip</a> here are all files required to run OCI, OCCI, and JDBC-OCI applications.</p>
+<p>2. Extract</p>
+<blockquote><p>$ unzip instantclient-basic-nt-11.2.0.3.0.zip</p></blockquote>
+<p>3. Create necessary directories, locate software and set variables</p>
+<p>Run winecfg, it will create .wine directory under $HOME.</p>
+<blockquote><p>$ winecfg</p></blockquote>
+<p>Under Drives tab, there will be entries like:</p>
+<blockquote><p><strong>Letter&nbsp;&nbsp; |&nbsp; Drive Mapping<br>
+</strong>C:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; ../drive_c<br>
+Z:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | /</p></blockquote>
+<p>Means our C drive will be $HOME/.wine/drive_c</p>
+<p>Now create directories……..</p>
+<blockquote><p>$ cd $HOME/.wine/drive_c<br>
+$ mkdir -p oracle/bin<br>
+$ mkdir -p oracle/network/admin</p></blockquote>
+<p>Go to the directory where you have extracted instantclient_11_2 and copy its content to oracle/bin directory:<br>
+$ mv instantclient_11_2/*&nbsp; $HOME/.wine/drive_c/oracle/bin</p>
+<p>Now we have all neccessary .dll files in $HOME/.wine/drive_c/oracle/bin the same as C:\oracle\bin</p>
+<p>Modifying regedit…</p>
+<blockquote><p>$ wine regedit</p></blockquote>
+<p>Under HKEY_LOCAL_MACHINE\Software add new key called Oracle.<br>
+Under HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\SessionManager\Environment<br>
+Edit the following values at the end of the PATH variable: c:\oracle;c:\oracle\bin<br>
+Create new string value named TNS_ADMIN with the value data c:\oracle\network\admin.</p>
+<p><a href="https://dba010.files.wordpress.com/2012/08/image3.png"><img style="margin:0;display:inline;border-width:0;" title="image" src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/image_thumb3.png" alt="image" width="866" height="587" align="left" border="0"></a></p>
+<p>Now place <span class="skimlinks-unlinked">sqlnet.ora</span> and <span class="skimlinks-unlinked">tnsnames.ora</span> files into the c:\oracle\network\admin directory:</p>
+<p>–<span class="skimlinks-unlinked">SQLNET.ORA</span></p>
+<blockquote><p>SQLNET.AUTHENTICATION_SERVICES= (NTS)</p>
+<p>NAMES.DIRECTORY_PATH= (TNSNAMES, EZCONNECT)</p></blockquote>
+<p>–<span class="skimlinks-unlinked">TNSNAMES.ORA</span></p>
+<blockquote><p>ORCL =<br>
+(DESCRIPTION =<br>
+(ADDRESS = (PROTOCOL = TCP)(HOST = compname)(PORT = 1521))<br>
+(CONNECT_DATA =<br>
+(SERVER = DEDICATED)<br>
+(SERVICE_NAME = orcl)<br>
+)<br>
+)</p></blockquote>
+<p><strong><span style="font-size:medium;">Installing PL/SQL Developer</span></strong></p>
+<p>1. Download the software from here(note, it is a trial): <a href="http://www.allroundautomations.com/">http://www.allroundautomations.com/</a></p>
+<p>Install and run the software.</p>
+<p>You will see incomplete login window, where “Connect as” field is not displayed.</p>
+<p>Now let’s solve this:</p>
+<p>1. Close the window and under <strong>Preferences</strong>-&gt;<strong>Oracle</strong>-&gt;<strong>Connection</strong> fill the following fields:</p>
+<p>Oracle Home (empty is autodetect): C:\oracle<br>
+OCI library (empty is autodetect): C:\oracle\bin\<span class="skimlinks-unlinked">oci.dll</span></p>
+<p>2. <strong>Preferences</strong>-&gt; <strong>User Interface-&gt;Appearance&nbsp; </strong>uncheck <strong>Faded disabled buttons</strong></p>
+<p>Re-run PL/SQL Developer.</p>
+<p>That’s it.</p>
+		<div class="wpcnt">
+			<div class="wpa wpmrec">
+				<a class="wpa-about" href="https://wordpress.com/about-these-ads/" rel="nofollow">About these ads</a>
+				<div class="u">
+					<script type="text/javascript">
+					(function(g){g.__ATA.initAd({sectionId:26942, width:300, height:250});})(window);
+					</script><div id="automattic-id-7590" data-section="26942" style="width:300px; height:250px;"></div>
+				</div>
+			</div>
+		</div><div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-2825" class="share-twitter sd-button share-icon" href="https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/?share=twitter&nb=1" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-2825" class="share-facebook sd-button share-icon" href="https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/?share=facebook&nb=1" target="_blank" title="Share on Facebook"><span>Facebook</span></a></li><li class="share-end"></li></ul></div></div></div><div class="sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-loaded" id="like-post-wrapper-30152514-2825-55edf597e214a" data-src="//widgets.wp.com/likes/#blog_id=30152514&amp;post_id=2825&amp;origin=dba010.wordpress.com&amp;obj_id=30152514-2825-55edf597e214a" data-name="like-post-frame-30152514-2825-55edf597e214a"><h3 class="sd-title">Like this:</h3><div class="likes-widget-placeholder post-likes-widget-placeholder" style="height: 55px; display: none;"><span class="button"><span>Like</span></span> <span class="loading">Loading...</span></div><iframe class="post-likes-widget jetpack-likes-widget" name="like-post-frame-30152514-2825-55edf597e214a" height="55px" width="100%" frameborder="0" src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/saved_resource(10).html"></iframe><span class="sd-text-color"></span><a class="sd-link-color"></a></div>
+<div id="jp-relatedposts" class="jp-relatedposts" style="display: block;">
+	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+<div class="jp-relatedposts-items jp-relatedposts-items-minimal"><p class="jp-relatedposts-post jp-relatedposts-post0" data-post-id="97" data-post-format="false"><span class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" href="https://dba010.wordpress.com/2010/12/20/apex-installationv4-0/" title="Apex Installation(v4.0)
+
+1.Oracle Application Express Installation Requirements 1.1 Oracle Database Requirement Oracle Application Express version 4.0 requires an Oracle database (Enterprise Edition, Standard Edition or Standard Edition One) that is release 10.2.0.3 or higher. Application Express 4.0 can also be used with Oracle Database 10g Express. 1.1.1 Checking the shared_pool_size of the…" rel="nofollow" data-origin="2825" data-position="0">Apex Installation(v4.0)</a></span><span class="jp-relatedposts-post-context">In "DB"</span></p><p class="jp-relatedposts-post jp-relatedposts-post1" data-post-id="519" data-post-format="false"><span class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" href="https://dba010.wordpress.com/2011/01/12/expdp-impdp-fails-version-incompatibility-issue-installing-olap/" title="Expdp/Impdp fails,version incompatibility issue(Installing OLAP)
+
+Real World Scenario Exchanging data between Oracle 11.1.0 and Oracle 11.2.0 using export/import data pump caused the following error. PLS-00201: identifier &#39;DBMS_CUBE_EXP.SCHEMA_INFO_IMP_BEG&#39; must be declared PLS-00201: identifier &#39;DBMS_CUBE_EXP.SCHEMA_INFO_IMP_LOOP&#39; must be declared PLS-00201: identifier &#39;DBMS_CUBE_EXP.SCHEMA_INFO_IMP_END&#39; must be declared Sometimes this happens when you are exchanging data not just between these specific…" rel="nofollow" data-origin="2825" data-position="1">Expdp/Impdp fails,version incompatibility issue(Installing OLAP)</a></span><span class="jp-relatedposts-post-context">In "DB"</span></p><p class="jp-relatedposts-post jp-relatedposts-post2" data-post-id="2221" data-post-format="false"><span class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" href="https://dba010.wordpress.com/2011/07/25/install-sql-developer-on-centos-5/" title="Install SQL Developer on Centos 5
+
+Installing SQL Developer on Centos 5 is a little bit different from Installing SQL Developer on Open Suse. 1. Download SQL Developer installation from Oracle SQL Developer RPM for Linux. 2. Install that rpm package: &amp;gt; su Password: # rpm -Uhv sqldeveloper-3.0.04.34-1.noarch.rpm 3. Download JDK from here. You need Self…" rel="nofollow" data-origin="2825" data-position="2">Install SQL Developer on Centos 5</a></span><span class="jp-relatedposts-post-context">In "DB"</span></p></div></div></div><div class="clear"></div>
+					
+					<!--
+					<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+			xmlns:dc="http://purl.org/dc/elements/1.1/"
+			xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+		<rdf:Description rdf:about="https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/"
+    dc:identifier="https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/"
+    dc:title="Install PL/SQL Developer under Wine on&nbsp;Linux"
+    trackback:ping="https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/trackback/" />
+</rdf:RDF>					-->
+
+				</div>
+
+				<div class="post-meta">
+					<p>
+						<span class="categories">Filed under <a href="https://dba010.wordpress.com/category/db/" rel="category tag">DB</a>, <a href="https://dba010.wordpress.com/category/unix/" rel="category tag">Unix</a></span>
+						<span class="tags">Tagged with <a href="https://dba010.wordpress.com/tag/flex/" rel="tag">flex</a>, <a href="https://dba010.wordpress.com/tag/linux-2/" rel="tag">linux</a>, <a href="https://dba010.wordpress.com/tag/plsql/" rel="tag">PL/SQL</a>, <a href="https://dba010.wordpress.com/tag/wine/" rel="tag">wine</a></span>					</p>
+				</div>
+
+			</div>
+
+			
+						<p></p>
+
+			<div id="comments">
+	
+
+
+
+
+						<div id="respond" class="comment-respond js">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="https://dba010.wordpress.com/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										
+
+
+												<input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="5baaed263f"><input type="hidden" name="_wp_http_referer" value="/2012/08/14/install-plsql-developer-under-wine-on-linux/">
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest">
+
+<div class="comment-form-field comment-textarea">
+	
+	<div id="comment-form-comment"><textarea tabindex="-1" style="position: absolute; top: -999px; left: 0px; right: auto; bottom: auto; border: 0px; padding: 0px; box-sizing: content-box; word-wrap: break-word; overflow: hidden; transition: none; height: 0px !important; min-height: 0px !important; font-family: Arial, Helvetica, Tahoma, Verdana, sans-serif; font-size: 14px; font-weight: 400; font-style: normal; letter-spacing: 0px; text-transform: none; text-decoration: none; word-spacing: 0px; text-indent: 0px; line-height: normal; width: 608px;" class="autosizejs "></textarea><textarea id="comment" name="comment" title="Enter your comment here..." placeholder="Enter your comment here..." style="height: 36px; overflow: hidden; word-wrap: break-word; resize: none;"></textarea></div>
+</div>
+
+<div id="comment-form-identity" style="display: none;">
+
+	<div id="comment-form-nascar">
+		<p>Fill in your details below or click an icon to log in:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/#comment-form-guest" id="postas-guest" title="Guest">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/#comment-form-load-service:WordPress.com" id="postas-wordpress" title="WordPress.com">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/#comment-form-load-service:Twitter" id="postas-twitter" title="Twitter">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/#comment-form-load-service:Facebook" id="postas-facebook" title="Facebook">
+					<span></span>
+				</a>
+			</li>
+			<li>
+			<iframe id="googleplus-sign-in" name="googleplus-sign-in" src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/saved_resource.html" width="24" height="24" scrolling="no" allowtransparency="true" seamless="seamless" frameborder="0"></iframe>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/ad516503a11cd5ca435acc9bb6523536" alt="Gravatar" width="25" class="no-grav">
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">Email <span class="required">(required)</span> <span class="nopublish">(Address never made public)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value=""></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Name <span class="required">(required)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value=""></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Website</label>
+					<div class="comment-form-input"><input id="url" name="url" type="text" value=""></div>
+				</div>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/wplogo.png" alt="WordPress.com Logo" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="">
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="">
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="">
+				<p class="comment-form-posting-as pa-wordpress"><strong></strong> You are commenting using your <span class="skimlinks-unlinked">WordPress.com</span> account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/ad516503a11cd5ca435acc9bb6523536" alt="Twitter picture" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="">
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="">
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="">
+				<p class="comment-form-posting-as pa-twitter"><strong></strong> You are commenting using your Twitter account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/ad516503a11cd5ca435acc9bb6523536" alt="Facebook photo" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="">
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="">
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="">
+				<p class="comment-form-posting-as pa-facebook"><strong></strong> You are commenting using your Facebook account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/ad516503a11cd5ca435acc9bb6523536" alt="Google+ photo" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="">
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="">
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="">
+				<p class="comment-form-posting-as pa-googleplus"><strong></strong> You are commenting using your Google+ account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+		<p>Connecting to %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe" style="display: none;">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;" tabindex="6"> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Notify me of new comments via email.</label></p></div>
+
+						
+						<p class="form-submit" style="display: none;"><input name="submit" type="submit" id="comment-submit" class="submit" value="Post Comment"> <input type="hidden" name="comment_post_ID" value="2825" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="06e86e8e46"></p>
+<input type="hidden" name="genseq" value="1441658263">
+<p style="display: none;"></p>					<input type="hidden" id="ak_js" name="ak_js" value="1441658264642"></form>
+							</div><!-- #respond -->
+			<div style="clear: both"></div>
+</div><!-- #comments -->
+	</div>
+
+<div id="sidebar">
+
+	<div id="search-2" class="widget widget_search"><form role="search" method="get" id="searchform" class="searchform" action="https://dba010.wordpress.com/">
+				<div>
+					<label class="screen-reader-text" for="s">Search for:</label>
+					<input type="text" value="" name="s" id="s">
+					<input type="submit" id="searchsubmit" value="Search">
+				</div>
+			</form></div>		<div id="recent-posts-2" class="widget widget_recent_entries">		<h4>Recent Posts</h4>		<ul>
+					<li>
+				<a href="https://dba010.wordpress.com/2015/08/12/ora-01031-insufficient-privileges-while-creating-mview-in-different-schema/">ORA-01031: Insufficient Privileges while creating mview in different&nbsp;schema.</a>
+						</li>
+					<li>
+				<a href="https://dba010.wordpress.com/2015/06/26/drop-column-raises-ora-00604-error-occurred-at-recursive-sql-level-1-ora-00942-table-or-view-does-not-exist/">DROP COLUMN raises ORA-00604: error occurred at recursive SQL level 1 ORA-00942: table or view does not&nbsp;exist</a>
+						</li>
+					<li>
+				<a href="https://dba010.wordpress.com/2015/01/08/ora-22992-cannot-use-lob-locators-selected-from-remote-tables-oracle-11g/">ORA-22992: cannot use LOB locators selected from remote tables Oracle&nbsp;11g</a>
+						</li>
+					<li>
+				<a href="https://dba010.wordpress.com/2014/09/22/configure-oracle-11g-database-to-connect-with-addomain-user-using-kerberos5/">Configure Oracle 11g database to connect with AD(Domain) user using&nbsp;Kerberos5</a>
+						</li>
+					<li>
+				<a href="https://dba010.wordpress.com/2014/03/06/oracleasm-deletedisk-failed-unable-to-clear-disk/">Oracleasm deletedisk failed Unable to clear&nbsp;disk</a>
+						</li>
+				</ul>
+		</div><div id="archives-2" class="widget widget_archive"><h4>Archives</h4>		<ul>
+	<li><a href="https://dba010.wordpress.com/2015/08/">August 2015</a></li>
+	<li><a href="https://dba010.wordpress.com/2015/06/">June 2015</a></li>
+	<li><a href="https://dba010.wordpress.com/2015/01/">January 2015</a></li>
+	<li><a href="https://dba010.wordpress.com/2014/09/">September 2014</a></li>
+	<li><a href="https://dba010.wordpress.com/2014/03/">March 2014</a></li>
+	<li><a href="https://dba010.wordpress.com/2014/01/">January 2014</a></li>
+	<li><a href="https://dba010.wordpress.com/2013/11/">November 2013</a></li>
+	<li><a href="https://dba010.wordpress.com/2013/04/">April 2013</a></li>
+	<li><a href="https://dba010.wordpress.com/2013/02/">February 2013</a></li>
+	<li><a href="https://dba010.wordpress.com/2013/01/">January 2013</a></li>
+	<li><a href="https://dba010.wordpress.com/2012/12/">December 2012</a></li>
+	<li><a href="https://dba010.wordpress.com/2012/11/">November 2012</a></li>
+	<li><a href="https://dba010.wordpress.com/2012/09/">September 2012</a></li>
+	<li><a href="https://dba010.wordpress.com/2012/08/">August 2012</a></li>
+	<li><a href="https://dba010.wordpress.com/2012/07/">July 2012</a></li>
+	<li><a href="https://dba010.wordpress.com/2012/06/">June 2012</a></li>
+	<li><a href="https://dba010.wordpress.com/2012/05/">May 2012</a></li>
+	<li><a href="https://dba010.wordpress.com/2012/04/">April 2012</a></li>
+	<li><a href="https://dba010.wordpress.com/2012/03/">March 2012</a></li>
+	<li><a href="https://dba010.wordpress.com/2012/02/">February 2012</a></li>
+	<li><a href="https://dba010.wordpress.com/2011/12/">December 2011</a></li>
+	<li><a href="https://dba010.wordpress.com/2011/11/">November 2011</a></li>
+	<li><a href="https://dba010.wordpress.com/2011/10/">October 2011</a></li>
+	<li><a href="https://dba010.wordpress.com/2011/09/">September 2011</a></li>
+	<li><a href="https://dba010.wordpress.com/2011/08/">August 2011</a></li>
+	<li><a href="https://dba010.wordpress.com/2011/07/">July 2011</a></li>
+	<li><a href="https://dba010.wordpress.com/2011/06/">June 2011</a></li>
+	<li><a href="https://dba010.wordpress.com/2011/05/">May 2011</a></li>
+	<li><a href="https://dba010.wordpress.com/2011/04/">April 2011</a></li>
+	<li><a href="https://dba010.wordpress.com/2011/03/">March 2011</a></li>
+	<li><a href="https://dba010.wordpress.com/2011/02/">February 2011</a></li>
+	<li><a href="https://dba010.wordpress.com/2011/01/">January 2011</a></li>
+	<li><a href="https://dba010.wordpress.com/2010/12/">December 2010</a></li>
+		</ul>
+</div><div id="categories-2" class="widget widget_categories"><h4>Categories</h4>		<ul>
+	<li class="cat-item cat-item-448087"><a href="https://dba010.wordpress.com/category/db/10g/">10g</a>
+</li>
+	<li class="cat-item cat-item-3370"><a href="https://dba010.wordpress.com/category/application/">Application</a>
+</li>
+	<li class="cat-item cat-item-1577297"><a href="https://dba010.wordpress.com/category/backup-exec/">Backup Exec</a>
+</li>
+	<li class="cat-item cat-item-4667"><a href="https://dba010.wordpress.com/category/db/">DB</a>
+</li>
+	<li class="cat-item cat-item-181924"><a href="https://dba010.wordpress.com/category/db/em/">EM</a>
+</li>
+	<li class="cat-item cat-item-905317"><a href="https://dba010.wordpress.com/category/programming/javascript/extjs/">extjs</a>
+</li>
+	<li class="cat-item cat-item-22518"><a href="https://dba010.wordpress.com/category/hp/">HP</a>
+</li>
+	<li class="cat-item cat-item-53242"><a href="https://dba010.wordpress.com/category/programming/html5/">HTML5</a>
+</li>
+	<li class="cat-item cat-item-457"><a href="https://dba010.wordpress.com/category/programming/javascript/">JavaScript</a>
+</li>
+	<li class="cat-item cat-item-649626"><a href="https://dba010.wordpress.com/category/kerberos/">Kerberos</a>
+</li>
+	<li class="cat-item cat-item-610"><a href="https://dba010.wordpress.com/category/linux/">Linux</a>
+</li>
+	<li class="cat-item cat-item-120"><a href="https://dba010.wordpress.com/category/mobile/">Mobile</a>
+</li>
+	<li class="cat-item cat-item-748851"><a href="https://dba010.wordpress.com/category/netbackup/">Netbackup</a>
+</li>
+	<li class="cat-item cat-item-7426"><a href="https://dba010.wordpress.com/category/networking/">Networking</a>
+</li>
+	<li class="cat-item cat-item-103"><a href="https://dba010.wordpress.com/category/news/">News</a>
+</li>
+	<li class="cat-item cat-item-531376"><a href="https://dba010.wordpress.com/category/os/oracle-enterprise-linux/">Oracle Enterprise Linux</a>
+</li>
+	<li class="cat-item cat-item-3383"><a href="https://dba010.wordpress.com/category/os/">OS</a>
+</li>
+	<li class="cat-item cat-item-196"><a href="https://dba010.wordpress.com/category/programming/">Programming</a>
+</li>
+	<li class="cat-item cat-item-505044"><a href="https://dba010.wordpress.com/category/db/rac/">RAC</a>
+</li>
+	<li class="cat-item cat-item-8446142"><a href="https://dba010.wordpress.com/category/db/real-world-scenarios/">Real World Scenarios</a>
+</li>
+	<li class="cat-item cat-item-110593070"><a href="https://dba010.wordpress.com/category/linux/real-world-scenarios-linux/">Real World Scenarios</a>
+</li>
+	<li class="cat-item cat-item-27854"><a href="https://dba010.wordpress.com/category/sql-server/reporting-services/">Reporting Services</a>
+</li>
+	<li class="cat-item cat-item-43194666"><a href="https://dba010.wordpress.com/category/os/rhel6/">RHEL6</a>
+</li>
+	<li class="cat-item cat-item-6407"><a href="https://dba010.wordpress.com/category/sql-server/">SQL Server</a>
+</li>
+	<li class="cat-item cat-item-115155158"><a href="https://dba010.wordpress.com/category/db/standby-db/">STANDBY</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="https://dba010.wordpress.com/category/uncategorized/">Uncategorized</a>
+</li>
+	<li class="cat-item cat-item-9203"><a href="https://dba010.wordpress.com/category/unix/">Unix</a>
+</li>
+		</ul>
+</div><div id="meta-2" class="widget widget_meta"><h4>Meta</h4>			<ul>
+			<li><a href="https://signup.wordpress.com/start/?ref=wplogin">Register</a></li>			<li><a href="https://dba010.wordpress.com/wp-login.php">Log in</a></li>
+			<li><a href="https://dba010.wordpress.com/feed/">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="https://dba010.wordpress.com/comments/feed/">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+<li><a href="http://wordpress.com/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.com</a></li>			</ul>
+</div>
+</div>
+</div>
+
+
+<div id="footer">
+	<div class="footerleft">
+		<p><a href="https://wordpress.com/?ref=footer_blog">Blog at WordPress.com</a>.</p>
+    </div>
+    <div class="footerright">
+	    <a href="https://wordpress.com/themes/enterprise/" title="Learn more about this theme">The Enterprise Theme</a>.    </div>
+</div>
+
+</div>
+
+<!-- wpcom_wp_footer -->
+<script type="text/javascript" src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/gprofiles.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/wpgroho.js"></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	</div>
+<script type="text/javascript">
+/* <![CDATA[ */
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/dba010.wordpress.com\/public.api\/connect\/?action=request","logoutURL":"https:\/\/dba010.wordpress.com\/wp-login.php?action=logout&_wpnonce=e2aa87e7f1","homeURL":"https:\/\/dba010.wordpress.com\/","postID":"2825","gravDefault":"identicon","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"0","userIsLoggedIn":"","isJetpack":"0","text_direction":"ltr"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/saved_resource(5)"></script>
+
+	<div id="bit" class="loggedout-follow-normal" style="bottom: -217px;">
+		<a class="bsub" href="javascript:void(0)"><span id="bsub-text">Follow</span></a>
+		<div id="bitsubscribe">
+
+					<h3><label for="loggedout-follow-field">Follow “DBA-010”</label></h3>
+
+			<form action="https://subscribe.wordpress.com/" method="post" accept-charset="utf-8" id="loggedout-follow">
+			<p>Get every new post delivered to your Inbox.</p>
+
+			<p id="loggedout-follow-error" style="display: none;"></p>
+
+			
+			<p><input type="email" name="email" placeholder="Enter your email address" id="loggedout-follow-field"></p>
+
+			<input type="hidden" name="action" value="subscribe">
+			<input type="hidden" name="blog_id" value="30152514">
+			<input type="hidden" name="source" value="https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/">
+			<input type="hidden" name="sub-type" value="loggedout-follow">
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="a160cd1156"><input type="hidden" name="_wp_http_referer" value="/2012/08/14/install-plsql-developer-under-wine-on-linux/">
+			<p id="bsub-subscribe-button"><input type="submit" value="Sign me up"></p>
+			</form>
+					<div id="bsub-credit"><a href="https://wordpress.com/?ref=lof">Build a website with WordPress.com</a></div>
+		</div><!-- #bitsubscribe -->
+	</div><!-- #bit -->
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/dba010.wordpress.com\/2012\/08\/14\/install-plsql-developer-under-wine-on-linux\/":2825};
+	</script>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<iframe src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/master.html" scrolling="no" id="likes-master" name="likes-master" style="display:none;"></iframe>
+		<div id="likes-other-gravatars"><div class="likes-text"><span>%d</span> bloggers like this:</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+		<script type="text/javascript">
+		//<![CDATA[
+			var jetpackLikesWidgetQueue = [];
+			var jetpackLikesWidgetBatch = [];
+			var jetpackLikesMasterReady = false;
+
+			function JetpackLikespostMessage( message, target ) {
+				if ( "string" === typeof message ){
+					try{
+						message = JSON.parse( message );
+					}
+					catch(e) {
+						return;
+					}
+				}
+
+				pm( {
+					target: target,
+					type: 'likesMessage',
+					data: message,
+					origin: '*'
+				} );
+			}
+
+			function JetpackLikesBatchHandler() {
+				var requests = [];
+				jQuery( 'div.jetpack-likes-widget-unloaded' ).each( function( i ) {
+					if ( jetpackLikesWidgetBatch.indexOf( this.id ) > -1 )
+						return;
+					jetpackLikesWidgetBatch.push( this.id );
+					var regex = /like-(post|comment)-wrapper-(\d+)-(\d+)-(\w+)/;
+					var match = regex.exec( this.id );
+					if ( ! match || match.length != 5 )
+						return;
+
+					var info = {
+						blog_id: match[2],
+						width:   this.width
+					};
+
+					if ( 'post' == match[1] ) {
+						info.post_id = match[3];
+					} else if ( 'comment' == match[1] ) {
+						info.comment_id = match[3];
+					}
+
+					info.obj_id = match[4];
+
+					requests.push( info );
+				});
+
+				if ( requests.length > 0 ) {
+					JetpackLikespostMessage( { event: 'initialBatch', requests: requests }, window.frames['likes-master'] );
+				}
+			}
+
+			function JetpackLikesMessageListener( event ) {
+				if ( "undefined" == typeof event.event )
+					return;
+
+				if ( 'masterReady' == event.event ) {
+					jQuery( document ).ready( function() {
+						jetpackLikesMasterReady = true;
+
+						var stylesData = {
+								event: 'injectStyles'
+						};
+
+						if ( jQuery( 'iframe.admin-bar-likes-widget' ).length > 0 ) {
+							JetpackLikespostMessage( { event: 'adminBarEnabled' }, window.frames[ 'likes-master' ] );
+
+							stylesData.adminBarStyles = {
+								background: jQuery( '#wpadminbar .quicklinks li#wp-admin-bar-wpl-like > a' ).css( 'background' ),
+								isRtl: ( 'rtl' == jQuery( '#wpadminbar' ).css( 'direction' ) )
+							};
+						}
+
+						if ( !window.addEventListener )
+							jQuery( '#wp-admin-bar-admin-bar-likes-widget' ).hide();
+
+						stylesData.textStyles = {
+							color: jQuery( '.sd-text-color').css( 'color' ),
+							fontFamily: jQuery( '.sd-text-color' ).css( 'font-family' ),
+							fontSize: jQuery( '.sd-text-color' ).css( 'font-size' ),
+							direction: jQuery( '.sd-text-color' ).css( 'direction' ),
+							fontWeight: jQuery( '.sd-text-color' ).css( 'font-weight' ),
+							fontStyle: jQuery( '.sd-text-color' ).css( 'font-style' ),
+							textDecoration: jQuery( '.sd-text-color' ).css('text-decoration')
+						};
+
+						stylesData.linkStyles = {
+							color: jQuery( '.sd-link-color' ).css('color'),
+							fontFamily: jQuery( '.sd-link-color' ).css('font-family'),
+							fontSize: jQuery( '.sd-link-color' ).css('font-size'),
+							textDecoration: jQuery( '.sd-link-color' ).css('text-decoration'),
+							fontWeight: jQuery( '.sd-link-color' ).css( 'font-weight' ),
+							fontStyle: jQuery( '.sd-link-color' ).css( 'font-style' )
+						};
+
+						JetpackLikespostMessage( stylesData, window.frames[ 'likes-master' ] );
+
+						JetpackLikesBatchHandler();
+
+						jQuery( document ).on( 'inview', 'div.jetpack-likes-widget-unloaded', function() {
+							jetpackLikesWidgetQueue.push( this.id );
+						});
+					});
+				}
+
+				if ( 'showLikeWidget' == event.event ) {
+					jQuery( '#' + event.id + ' .post-likes-widget-placeholder'  ).fadeOut( 'fast', function() {
+						jQuery( '#' + event.id + ' .post-likes-widget' ).fadeIn( 'fast', function() {
+							JetpackLikespostMessage( { event: 'likeWidgetDisplayed', blog_id: event.blog_id, post_id: event.post_id, obj_id: event.obj_id }, window.frames['likes-master'] );
+						});
+					});
+				}
+
+				if ( 'clickReblogFlair' == event.event ) {
+					wpcom_reblog.toggle_reblog_box_flair( event.obj_id );
+				}
+
+				if ( 'showOtherGravatars' == event.event ) {
+					var $container = jQuery( '#likes-other-gravatars' );
+					var $list = $container.find( 'ul' );
+
+					$container.hide();
+					$list.html( '' );
+
+					$container.find( '.likes-text span' ).text( event.total );
+
+					jQuery.each( event.likers, function( i, liker ) {
+						$list.append( '<li class="' + liker.css_class + '"><a href="' + liker.profile_URL + '" class="wpl-liker" rel="nofollow" target="_parent"><img src="' + liker.avatar_URL + '" alt="' + liker.name + '" width="30" height="30" style="padding-right: 3px;" /></a></li>');
+					} );
+
+					var offset = jQuery( "[name='" + event.parent + "']" ).offset();
+
+					$container.css( 'left', offset.left + event.position.left - 10 + 'px' );
+					$container.css( 'top', offset.top + event.position.top - 33 + 'px' );
+
+					var rowLength = Math.floor( event.width / 37 );
+					var height = ( Math.ceil( event.likers.length / rowLength ) * 37 ) + 13;
+					if ( height > 204 ) {
+						height = 204;
+					}
+
+					$container.css( 'height', height + 'px' );
+					$container.css( 'width', rowLength * 37 - 7 + 'px' );
+
+					$list.css( 'width', rowLength * 37 + 'px' );
+
+					$container.fadeIn( 'slow' );
+
+					var scrollbarWidth = $list[0].offsetWidth - $list[0].clientWidth;
+					if ( scrollbarWidth > 0 ) {
+						$container.width( $container.width() + scrollbarWidth );
+						$list.width( $list.width() + scrollbarWidth );
+					}
+				}
+			}
+
+			pm.bind( 'likesMessage', function(e) { JetpackLikesMessageListener(e); } );
+
+			jQuery( document ).click( function( e ) {
+				var $container = jQuery( '#likes-other-gravatars' );
+
+				if ( $container.has( e.target ).length === 0 ) {
+					$container.fadeOut( 'slow' );
+				}
+			});
+
+			function JetpackLikesWidgetQueueHandler() {
+				var wrapperID;
+				if ( ! jetpackLikesMasterReady ) {
+					setTimeout( JetpackLikesWidgetQueueHandler, 500 );
+					return;
+				}
+
+				if ( jetpackLikesWidgetQueue.length > 0 ) {
+					// We may have a widget that needs creating now
+					var found = false;
+					while( jetpackLikesWidgetQueue.length > 0 ) {
+						// Grab the first member of the queue that isn't already loading.
+						wrapperID = jetpackLikesWidgetQueue.splice( 0, 1 )[0];
+						if ( jQuery( '#' + wrapperID ).hasClass( 'jetpack-likes-widget-unloaded' ) ) {
+							found = true;
+							break;
+						}
+					}
+					if ( ! found ) {
+						setTimeout( JetpackLikesWidgetQueueHandler, 500 );
+						return;
+					}
+				} else if ( jQuery( 'div.jetpack-likes-widget-unloaded' ).length > 0 ) {
+					// Grab any unloaded widgets for a batch request
+					JetpackLikesBatchHandler();
+
+					// Get the next unloaded widget
+					wrapperID = jQuery( 'div.jetpack-likes-widget-unloaded' ).first()[0].id;
+					if ( ! wrapperID ) {
+						// Everything is currently loaded
+						setTimeout( JetpackLikesWidgetQueueHandler, 500 );
+						return;
+					}
+				}
+
+				if ( 'undefined' === typeof wrapperID ) {
+					setTimeout( JetpackLikesWidgetQueueHandler, 500 );
+					return;
+				}
+
+				var $wrapper = jQuery( '#' + wrapperID );
+				$wrapper.find( 'iframe' ).remove();
+
+				if ( $wrapper.hasClass( 'slim-likes-widget' ) ) {
+					$wrapper.find( '.post-likes-widget-placeholder' ).after( "<iframe class='post-likes-widget jetpack-likes-widget' name='" + $wrapper.data( 'name' ) + "' height='22px' width='68px' frameBorder='0' scrolling='no' src='" + $wrapper.data( 'src' ) + "'></iframe>" );
+				} else {
+					$wrapper.find( '.post-likes-widget-placeholder' ).after( "<iframe class='post-likes-widget jetpack-likes-widget' name='" + $wrapper.data( 'name' ) + "' height='55px' width='100%' frameBorder='0' src='" + $wrapper.data( 'src' ) + "'></iframe>" );
+				}
+
+				$wrapper.removeClass( 'jetpack-likes-widget-unloaded' ).addClass( 'jetpack-likes-widget-loading' );
+
+				$wrapper.find( 'iframe' ).load( function( e ) {
+					var $iframe = jQuery( e.target );
+					$wrapper.removeClass( 'jetpack-likes-widget-loading' ).addClass( 'jetpack-likes-widget-loaded' );
+
+					JetpackLikespostMessage( { event: 'loadLikeWidget', name: $iframe.attr( 'name' ), width: $iframe.width() }, window.frames[ 'likes-master' ] );
+
+					if ( $wrapper.hasClass( 'slim-likes-widget' ) ) {
+						$wrapper.find( 'iframe' ).Jetpack( 'resizeable' );
+					}
+				});
+				setTimeout( JetpackLikesWidgetQueueHandler, 250 );
+			}
+			JetpackLikesWidgetQueueHandler();
+		//]]>
+		</script>
+<script type="text/javascript" src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/form.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var JetpackEmojiSettings = {"base_url":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/emoji\/twemoji\/"};
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/saved_resource(6)"></script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>	<script type="text/javascript">
+	var skimlinks_pub_id = "725X584219"
+	var skimlinks_sitename = "dba010.wordpress.com";
+	</script>
+	<script type="text/javascript" src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/725X1342.skimlinks.js"></script><script src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/w.js" type="text/javascript" async="" defer=""></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'30152514','blog_tz':'0','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'30152514','v':'wpcom','tz':'0','user_id':'0','post':'2825','subd':'dba010'}]);
+_stq.push(['extra', {'crypt':'UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdTdvUG14Q2VDQTR4LlUsLi82dU1mai9BMkE4eS10bVlkVk1DdnI3fnhkLEwrdHpjJUR4cUFFPSZNYlRCJSZmRlN0Nm1ZOXhbfjFhcWt4TmRYSFBMMGh+Y3VIN25fNTcmcDMseWhCMHErJVZ8SUw3JmQ9OXFkVTQvZ29VRXQ1aTV0VjdvenJTcHAlQnktcmkzcl0sfktJd242JWY5Nk5QZjBMUlpUSTJtPTFJU3pGcnVxa3B5ZjAsVUYleDJ3W3wudElIdT9KcEJBOEozRz9ybEk1azZzdndtWTZpalJ+fjRNNF9GNy5yazE1PVJCUHx8V1s4XXh0MUNKdyV0b2IlTnhY'}]);
+_stq.push([ 'clickTrackerInit', '30152514', '2825' ]);
+	</script>
+<noscript>&lt;img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /&gt;</noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+
+<img src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/g.gif" id="wpstats"><img src="./Install PL_SQL Developer under Wine on Linux _ DBA-010_files/saved_resource(7)" width="1" height="1" style="display: none;"></body></html>

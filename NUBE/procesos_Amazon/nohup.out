@@ -1,0 +1,21 @@
+
+SQL*Plus: Release 11.2.0.2.0 Production on Tue May 13 14:13:32 2014
+
+Copyright (c) 1982, 2011, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+declare
+*
+ERROR at line 1:
+ORA-06502: PL/SQL: numeric or value error: character to number conversion error
+ORA-06512: at "SIMBAL_ECA.P_INT_COPIA_SIMULACION", line 315
+ORA-02292: integrity constraint (SIMBAL_ECA.FKSREL_COMPON_COMPO) violated -
+child record found
+ORA-06512: at line 6
+
+
+SQL> Error 45 initializing SQL*Plus
+Internal error

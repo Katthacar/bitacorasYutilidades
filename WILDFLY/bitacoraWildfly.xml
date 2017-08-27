@@ -1,0 +1,172 @@
+***************************************************************************************************
+***************************************************************************************************
+*********************************************************************************INSTALANDO WILDFLY
+1) Después de la instalación de wildfly y su primer inicio ir a la pág. de la consola de administración.
+2) WildFly va a pedir que se agrege el usuario desde la consola(cmd) ejecutando el add-user.bat ó .sh
+que está ubicado en [WILDFLY_HOME]/bin.
+3) Si lanza un error de versión de java, de debe definir en el classPath la versión de java correcta.
+4) Después de agregar el usuario se debe actualizar la pág. de administración.
+
+
+***************************************************************************************************
+***************************************************************************************************
+******************************************************************INSTALANDO JDBC-DRIVER EN WILDFLY
+Referencia: http://www.adam-bien.com/roller/abien/entry/installing_oracle_jdbc_driver_on
+1) Descargar la versión del driver.
+2) Crear los subfolderes /com/oracle/main/ en la ruta [WILDFLY_HOME]/modules/system/layers/base/
+3) Copiar el driver.jar en el folder main/ y en este mismo directorio crear el archivo module.xml
+4) Copiar el sig. contenido, teniendo en cuenta el tipo de driver:
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<module xmlns="urn:jboss:module:1.1" name="com.oracle">
+
+  <resources>
+    <resource-root path="ojdbc[VERSION].jar"/>
+  </resources>
+  <dependencies>
+    <module name="javax.api"/>
+    <module name="javax.transaction.api"/>
+  </dependencies>
+  
+</module>
+
+Para MySql es así:
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.3" name="com.mysql">
+
+	<resources>
+		<resource-root path="mysql-connector-java-5.1.39-bin.jar" />
+	</resources>
+	<dependencies>
+		<module name="javax.api"/>
+		<module name="javax.transaction.api"/>
+		<module name="javax.servlet.api" optional="true"/>
+	</dependencies>
+	
+</module>
+
+5) En el standalone.xml del WildFly en la parte de drivers copiar el sig. cód.
+<driver name="oracle" module="com.oracle">
+	<driver-class>oracle.jdbc.OracleDriver</driver-class>
+</driver>
+
+Para MySql es así:
+<driver name="mysql" module="com.mysql">
+	<driver-class>com.mysql.jdbc.Driver</driver-class>
+</driver>
+
+6) Luego, desde la consola web de administración se puede crear el datasource seleccionando en:
+Subsystems -> Datasources -> Non-XA ó XA
+En la mayoría de casos es Non-XA, XA se utiliza para transacciones distribuidas.
+
+Al final en el archivo después de crear el datasource se verá así para oracle:
+</datasources>
+	<datasource jta="true" jndi-name="java:/PuntoMedidaDS" pool-name="PuntoMedidaDS" enabled="true" use-ccm="true">
+        <connection-url>jdbc:oracle:thin:@localhost:1521:orcl</connection-url>
+        <driver-class>oracle.jdbc.OracleDriver</driver-class>
+        <driver>oracle</driver>
+        <security>
+			<user-name>punto_medida</user-name>
+			<password>punto_medida</password>
+        </security>
+        <validation>
+            <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.oracle.OracleValidConnectionChecker"/>
+            <background-validation>true</background-validation>
+            <stale-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.oracle.OracleStaleConnectionChecker"/>
+            <exception-sorter class-name="org.jboss.jca.adapters.jdbc.extensions.oracle.OracleExceptionSorter"/>
+        </validation>
+    </datasource>
+    <drivers>
+        <driver name="oracle" module="com.oracle">
+			<driver-class>oracle.jdbc.OracleDriver</driver-class>
+        </driver>
+	</drivers>
+</datasources>
+
+7) Una alternativa seguramente más rápida a crear el módulo es hacer un deploy (como si fuera un .war o .ear) del .jar del conector. 
+Luego reiniciar el servidor y ya debe estar detectable desde el wizard de creación del datasource, y así proseguir con la creación del datasource.
+
+
+***************************************************************************************************
+***************************************************************************************************
+*********************************HABILITAR LA CONSOLA WEB DE ADMINISTRACIÓN EN JBOSS AS 7 Y WILDFLY
+Lo primero que tendremos que hacer es crear un usuario (no confundir: NO es un usuario del sistema) con permisos de administración. 
+Para crear un usuario administrador tenemos a nuestra disposición un script en el directorio /bin de nuestro servidor Jboss llamado add-user:
+
+Script para añadir usuarios a Jboss
+Script para añadir usuarios a Jboss
+
+En mi caso estoy trabajando en una plataforma Linux, aunque también tenéis add-user.bat para los que administréis desde Windows. Ejecuto el script:
+
+add-user.sh
+En cuanto a las preguntas subsiguientes, contestaremos:
+
+En la pregunta del tipo de usuario, seleccionaremos "a" (Management User).
+Cuando pregunte por ManagementRealm presionamos Enter, dejaremos el que viene por defecto.
+Introduciremos el usuario y la contraseña que consideremos oportunos. Estas credenciales serán únicamente para Jboss, 
+como dije anteriormente no es un usuario de sistema.
+Finalmente, confirmamos y el script se encargará de realizar las tareas pertinentes.
+Añadiendo al usuario administrativo
+Añadiendo al usuario administrativo
+
+Configurar el mapeo de interfaz
+
+Además tendremos que modificar ciertos parámetros de las interfaces del servidor Jboss. Por defecto, 
+la interfaz administrativa sólo escucha en la IP local 127.0.0.1 por lo que si intentamos acceder a la consola web desde una máquina remota, no será alcanzable.
+
+Si nuestro Jboss se va a ejecutar en modo de dominio, el fichero que tendremos que modificar será:
+
+$JBOSS_HOME/domain/configuration/host.xml
+Por el contrario, si vamos a ejecutarlo en modo standalone, tendremos que modificar el profile que vayamos a utilizar 
+durante la ejecución del servidor de aplicaciones. Ese profile puede ser:
+
+$JBOSS_HOME/standalone/configuration/standalone.xml
+$JBOSS_HOME/standalone/configuration/standalone-ha.xml
+$JBOSS_HOME/standalone/configuration/standalone-full-ha.xml
+$JBOSS_HOME/standalone/configuration/standalone-full.xml
+Una vez abierto el fichero, por ejemplo con vi, tendréis que buscar la entrada siguiente:
+
+jboss.bind.address.management
+
+Como véis, mi interfaz administrativa apunta a 127.0.0.1. La IP del servidor de Jboss es 192.168.2.101. Por lo tanto, cambiaremos:
+
+jboss.bind.address.management:127.0.0.1
+Por esto:
+
+jboss.bind.address.management:192.168.2.101
+Reiniciamos el servidor de aplicaciones. Una vez iniciado, desde nuestro ordenador intentamos acceder a la interfaz web. En el navegador ponemos:
+
+http://192.168.2.101:9990/console
+
+
+***************************************************************************************************
+***************************************************************************************************
+**************************************************************WILDFLY COMO SERVICIO EN LINUX UBUNTU
+REF: https://gesker.wordpress.com/2016/02/09/wildfly-10-on-ubuntu-15-10/
+1) Tener instalada la última versión de JAVA
+2) Crear usuario para wildfly: adduser --no-create-home --disabled-password --disabled-login wildfly
+3) Descargar wildfly: 
+cd /svr
+wget --tries=0 --continue http://download.jboss.org/wildfly/10.0.0.Final/wildfly-10.0.0.Final.tar.gz
+4) Estraer wildfly: tar -xzvf wildfly-10.0.0.Final.tar.gz
+5) Crear enlace simbólico: ln -s wildfly-10.0.0.Final wildfly
+6) Cambiar la propiedad de directorio y enlace simbólico a wildfly: chown -R wildfly.wildfly wildfly*
+7) Copiar el archivo wildfly-init-debian.sh del enlace simbólico a etc/init.d/wildfly: cp /srv/wildfly/docs/contrib/scripts/init.d/wildfly-init-debian.sh /etc/init.d/wildfly
+8) Ejecutar update-rc.d para asegurarse de que wildfly inicie en reboot el S.O: update-rc.d /etc/init.d/wildfly defaults (si sale error, cuando se reinicie el 
+S.O se debe iniciar manualmente el servicio de wildfly)
+9) Copiar wildfly.conf a la carpeta default: 
+cp /srv/wildfly/docs/contrib/scripts/init.d/wildfly.conf /etc/default/wildfly
+cd /etc/default/wildfly
+10) Editar el archivo wildfly contenido en /etc/default/wildfly, descomentando o editando las sig. líneas
+JBOSS_HOME="/srv/wildfly"
+JBOSS_USER=wildfly
+JBOSS_MODE=standalone
+JBOSS_CONFIG=standalone-full.xml — Change configuration file name in order to run full Java EE 7 Stack
+STARTUP_WAIT=120 –Probably overkill wait time
+SHUTDOWN_WAIT=120 –Probably overkill wait time
+JBOSS_CONSOLE_LOG="/var/log/wildfly/console.log"
+11) Agregar usuario wildfly anteriormente creado en el sistema wildfly:
+cd /srv/wildfly/bin
+./add-user.sh, seguir los pasos
+12) Iniciar servicios: service wildfly start

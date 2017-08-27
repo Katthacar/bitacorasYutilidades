@@ -1,0 +1,28 @@
+***************************************************************************************************
+***************************************************************************************************
+*************************************************CORREGIR ERROR ERROR: APACHE SHUTDOWN UNEXPECTEDLY
+This may be due to a blocked port, missing dependencies,
+improper privileges, a crash, or a shutdown by another method.
+Check the "/xampp/apache/logs/error.log" file
+and the Windows Event Viewer for more clues
+
+este error tiene dos posibles causas: 
+
+Hemos descomprimido Xampp en alguna carpeta y no en el directorio raíz. La solución es obvia, volver a descomprimir Xampp en el directorio raíz de cualquiera de nuestros discos.
+
+Los puertos que utiliza por defecto el servidor Apache y MySql (80 y 443) están siendo utilizados por otras aplicaciones instaladas en nuestro equipo.
+
+Para solucionarlo cambiaremos los puertos que por defecto usan Apache y MySql mediante la edición de dos ficheros de configuración.
+
+Editar el fichero httpd.conf ubicado en "C:\Xammp\Apache\Conf" y sustituir ServerName localhost:80 por ServerName localhost:8080.
+Listen 80 por Listen 8080.
+
+Editar el fichero httpd-ssl.conf ubicado en "C:\Xammp\Apache\Conf\Extra" y sustituir:
+<VirtualHost _default_:443> por <VirtualHost _default_:4430>.
+ServerName localhost:443 por ServerName localhost:4430.
+Listen 443 por Listen 4430.
+
+En este punto deberemos reiniciar el Xammp si lo teníamos abierto.
+
+Y por último recordar que como hemos cambiado el puerto, también ha cambiado la manera de llamar a nuestro servidor local. Ahora deberemos escribir en el navegador localhost:8080
+Y de esta manera corregiremos el error "Apache shutdown unexpectedly" al iniciar Xampp. Recordad que si abrís el Xampp con permisos de administrador os evitaréis algunos errores.

@@ -1,0 +1,5 @@
+FILE=SSMB.DMP
+OWNER=SIMBAL_ECA
+TABLES=(scott.emp,blake.dept)
+GRANTS=y
+INDEXES=y

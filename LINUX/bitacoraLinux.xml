@@ -1,0 +1,411 @@
+***************************************************************************************************
+***************************************************************************************************
+**************************************************************DESINSTALAR MYSQL POR COMPLETO UBUNTU
+***************************************************************************************************
+***************************************************************************************************
+sudo -i
+service mysql stop
+killall -KILL mysql mysqld_safe mysqld
+apt-get --yes purge mysql-server mysql-client
+apt-get --yes autoremove --purge
+apt-get autoclean
+deluser --remove-home mysql
+delgroup mysql
+rm -rf /etc/apparmor.d/abstractions/mysql /etc/apparmor.d/cache/usr.sbin.mysqld /etc/mysql /var/lib/mysql /var/log/mysql* /var/log/upstart/mysql.log* /var/run/mysqld
+updatedb
+exit
+
+
+***************************************************************************************************
+***************************************************************************************************
+****************************************************************INSTALAR JAVA EN UBUNTU CON APT-GET
+***************************************************************************************************
+***************************************************************************************************
+Instalando JRE/JDK por defecto
+Esta es la opción más fácil y recomendada. Esto instalará OpenJDK 6 en Ubuntu 12.04 y superiores, en el caso de 12.10+ se instalará OpenJDK 7.
+
+Instalando Java con apt-get es fácil. Primero actualizamos el índice de la paquetería:
+
+sudo apt-get update
+Después, revisa si Java no se ha instalado previamente:
+
+java -version
+Si ese comando regresa "The program java can be found in the following packages", 
+significa que Java no ha sido instalado aún, de modo que ejecutaremos el siguiente comando:
+
+sudo apt-get install default-jre
+Esto instlará Java Runtime Environment (JRE). Si necesitas en su lugar el Java Development Kit (JDK), 
+que usualmente se requiere para compilar aplicaciones Java; por ejemplo Apache Ant, Apache Maven, Eclipse y IntelliJ IDEA entonces ejecuta el siguiente comando:
+
+sudo apt-get install default-jdk
+Eso es todo lo que necesitas para instalar Java. Los otros pasos son opcionales y solo necesitan ejecutarse si son necesarios.
+
+Instalando OpenJDK 7 (opcional)
+Para instalar OpenJDK 7, ejecutar el siguiente comando:
+
+sudo apt-get install openjdk-7-jre
+Esto instalará el Java Runtime Environment (JRE). Si lo que requieres es el Java Development Kit (JDK), ejecuta el siguiente comando:
+
+sudo apt-get install openjdk-7-jdk
+Instalando Oracle JDK (opcional)
+Oracle JDK es el JDK oficial; como sea, ya no es mås porporcionada por Oracle en la instalación por defecto para Ubuntu.
+
+Aún es posible de instalar usando Apt-Get. Para instalar cualquier versión primero hay que ejecutar los siguientes commandos:
+
+sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+Después, dependiendo de la versión que deseas instalar, ejecuta uno de los siguientes comandos:
+
+Oracle JDK 6
+
+Es una versión vieja pero aún se usa.
+
+sudo apt-get install oracle-java6-installer
+Oracle JDK 7
+
+Esta es la versión estable más reciente.
+
+sudo apt-get install oracle-java7-installer
+Oracle JDK 8
+
+Esta es la versión para desarrolladores, el lanzamiento general fue programado para Marzo del 2014. 
+Este artículo externo de Java 8 podría ayudarte a entenderlo del todo.
+
+sudo apt-get install oracle-java8-installer
+Administrado Java (opcional)
+Cuando tienes múltiples instalaciones de Java en tu Droplet, la versión de Java por defecto puede ser elegida al gusto. 
+Para hacerlo, ejecuta el siguiente comando:
+
+sudo update-alternatives --config java
+Usualmente regresa algo como esto si tienes 2 instalaciones (si tienes más, seguramente regresará mås):
+
+There are 2 choices for the alternative java (providing /usr/bin/java).
+
+Selection    Path                                            Priority   Status
+------------------------------------------------------------
+* 0            /usr/lib/jvm/java-7-oracle/jre/bin/java          1062      auto mode
+  1            /usr/lib/jvm/java-6-openjdk-amd64/jre/bin/java   1061      manual mode
+  2            /usr/lib/jvm/java-7-oracle/jre/bin/java          1062      manual mode
+
+Press enter to keep the current choice[*], or type selection number:
+Ahora puedes seleccionar la versión que deseas utilizar por defecto. Esto también puede aplicarse para el compilador Java (javac):
+
+sudo update-alternatives --config javac
+Es la misma pantalla de selección que la del comando previo y debe usarse con el mismo sentido. 
+Este comando puede ser ejecutado para el resto de los comandos con diferentes instalaciones. 
+En Java, esto incluye pero no se limita a: keytool, javadoc y jarsigner.
+
+Configurando la variable de entorno "JAVA_HOME"
+Para configurar la variable de entorno JAVA_HOME, la cual es necesaria para algunos programas, lo primero es encontrar la ruta de la instalación de Java:
+
+sudo update-alternatives --config java
+Lo que nos regresará algo como esto:
+
+There are 2 choices for the alternative java (providing /usr/bin/java).
+
+Selection    Path                                            Priority   Status
+------------------------------------------------------------
+* 0            /usr/lib/jvm/java-7-oracle/jre/bin/java          1062      auto mode
+  1            /usr/lib/jvm/java-6-openjdk-amd64/jre/bin/java   1061      manual mode
+  2            /usr/lib/jvm/java-7-oracle/jre/bin/java          1062      manual mode
+
+Press enter to keep the current choice[*], or type selection number:
+Las rutas de instalación para cada versión:
+
+/usr/lib/jvm/java-7-oracle
+/usr/lib/jvm/java-6-openjdk-amd64
+/usr/lib/jvm/java-7-oracle
+Copia la ruta de la instalación que deseas y edita el archivo /etc/environment:
+
+sudo nano /etc/environment
+En este archivo, agrega la siguiente línea (remplazando TU_RUTA por la ruta que has copiado):
+
+JAVA_HOME="TU_RUTA"
+Eso debe ser suficiente para configurar la variable de entorno. Ahora recarga este archivo:
+
+source /etc/environment
+Pruébalo ejecutando:
+
+echo $JAVA_HOME
+
+
+***************************************************************************************************
+***************************************************************************************************
+*******************************************************************ENCONTRAR PATH DE JAVA EN UBUNTU
+***************************************************************************************************
+***************************************************************************************************
+whereis java
+Nos devolverá:
+java: /usr/bin/java /etc/java /usr/lib/java /usr/bin/X11/java /usr/share/java /usr/share/man/man1/java.1.gz
+Nos quedamos con el primero, y buscamos a donde apunta su enlace simbólico:
+ls -l /usr/bin/java
+Nos devolverá:
+lrwxrwxrwx 1 root root 22 ene 18  2014 /usr/bin/java -> /etc/alternatives/java
+Nos dice que apunta a /etc/alternatives/java pero ¿dónde apunta esto realmente?
+ls -l /etc/alternatives/java
+Nos devolverá:
+lrwxrwxrwx 1 root root 39 ene 18  2014 /etc/alternatives/java -> /usr/lib/jvm/java-7-oracle/jre/bin/java
+¡Eureka! nuestro Java está instalado en: /usr/lib/jvm/java-7-oracle/jre/bin/java
+Ahora podemos setear la variable de entorno JAVA_HOME:
+export JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre/bin/java
+Y ver que lo hemos puesto bien con:
+echo $JAVA_HOME
+
+
+***************************************************************************************************
+***************************************************************************************************
+**************************************************************WILDFLY COMO SERVICIO EN LINUX UBUNTU
+***************************************************************************************************
+***************************************************************************************************
+REF: https://gesker.wordpress.com/2016/02/09/wildfly-10-on-ubuntu-15-10/
+1) Tener instalada la última versión de JAVA
+2) Crear usuario para wildfly: adduser --no-create-home --disabled-password --disabled-login wildfly
+3) Descargar wildfly: 
+cd /svr
+wget --tries=0 --continue http://download.jboss.org/wildfly/10.0.0.Final/wildfly-10.0.0.Final.tar.gz
+4) Estraer wildfly: tar -xzvf wildfly-10.0.0.Final.tar.gz
+5) Crear enlace simbólico: ln -s wildfly-10.0.0.Final wildfly
+6) Cambiar la propiedad de directorio y enlace simbólico a wildfly: chown -R wildfly.wildfly wildfly*
+7) Copiar el archivo wildfly-init-debian.sh del enlace simbólico a etc/init.d/wildfly: cp /srv/wildfly/docs/contrib/scripts/init.d/wildfly-init-debian.sh /etc/init.d/wildfly
+8) Ejecutar update-rc.d para asegurarse de que wildfly inicie en reboot el S.O: update-rc.d /etc/init.d/wildfly defaults (si sale error, cuando se reinicie el 
+S.O se debe iniciar manualmente el servicio de wildfly)
+9) Copiar wildfly.conf a la carpeta default: 
+cp /srv/wildfly/docs/contrib/scripts/init.d/wildfly.conf /etc/default/wildfly
+cd /etc/default/wildfly
+10) Editar el archivo wildfly contenido en /etc/default/wildfly, descomentando o editando las sig. líneas
+JBOSS_HOME="/srv/wildfly"
+JBOSS_USER=wildfly
+JBOSS_MODE=standalone
+JBOSS_CONFIG=standalone-full.xml — Change configuration file name in order to run full Java EE 7 Stack
+STARTUP_WAIT=120 –Probably overkill wait time
+SHUTDOWN_WAIT=120 –Probably overkill wait time
+JBOSS_CONSOLE_LOG="/var/log/wildfly/console.log"
+11) Agregar usuario wildfly anteriormente creado en el sistema wildfly:
+cd /srv/wildfly/bin
+./add-user.sh, seguir los pasos
+12) Iniciar servicios: service wildfly start
+
+
+***************************************************************************************************
+***************************************************************************************************
+***********************************************************************INSTALAR SERVIDOR SVN UBUNTU
+***************************************************************************************************
+***************************************************************************************************
+REF: http://www.jcgonzalez.com/instalar-svn-server-web-ubuntu-tortoise
+sudo apt-get update
+sudo apt-get install subversion apache2 libapache2-svn apache2-utils
+*Si nos pregunta que si queremos instalar de damos a S(Sí) o Y(Yes). Si falla el update comprueba conectividad a internet, proxy, fix-missing etc.
+
+Crear las carpetas donde van a ir los repositorios
+sudo mkdir -p /svn/repos/
+
+Dar de alta el repositorio en SVN
+sudo svnadmin create /svn/repos/nombre_repo
+
+Dar permisos al usuario al servidor apache para que acceda a esa carpeta.
+
+sudo chown -R www-data:www-data /svn/repos/nombre_repo
+
+Crear un archivo de configuración en el apache para el repositorio. (Usa nano, vi, etc)
+
+En /etc/apache2/sites-available con el nombre nombre_repo-svnrepo.conf
+
+sudo vi /etc/apache2/sites-available/nombre_repo-svnrepo.conf
+
+<Location /svn>
+
+DAV svn
+
+SVNParentPath /svn/repos/
+
+SVNListParentPath On
+
+AuthType Basic
+
+AuthName "Repositorio Subversion del proyecto"
+
+AuthUserFile /etc/svnpasswd
+
+<LimitExcept GET PROPFIND OPTIONS REPORT>
+
+Require valid-user
+
+</LimitExcept>
+
+</Location>
+
+*Si usas vi guarda y sal con ESC :wq!
+
+Activar repositorio
+
+sudo a2ensite nombre_repo-svnrepo
+
+Reiniciar el servidor
+
+sudo service apache2 reload
+
+Crear el primer usuario
+
+sudo htpasswd -cm /etc/svnpasswd user1
+
+PRECAUCIÓN: Ahora pedirá introducir el password para el primer usuario. Si se vuelve a lanzar este comando borrará todos los demás usuarios existentes.
+
+Comando para crear los usuarios sucesivos
+
+sudo htpasswd -m /etc/svnpasswd user2
+
+
+***************************************************************************************************
+***************************************************************************************************
+**********************************************************************SETEAR VARIABLE JAVA EN LINUX
+***************************************************************************************************
+***************************************************************************************************
+1) editar /etc/profile y al final del mismo agregar las sig. líneas:
+JAVA_HOME=/usr/lib/jvm/java-8-oracle
+PATH=$PATH:$JAVA_HOME/bin
+export PATH JAVA_HOME
+2) Luego para que el sistema lea los cambios ejecutar en terminal: source /etc/profile
+3) Corroborar los valores de PATH y JAVA_HOME:
+set | grep PATH
+set | grep JAVA_HOME
+
+
+***************************************************************************************************
+***************************************************************************************************
+*************************************************************************GENERAR CLAVE PUTTY SERVER
+***************************************************************************************************
+***************************************************************************************************
+1) Ejecutar putty-gen y generar clave
+2) Copiar el texto generado del layout superior en un archivo de texto vacío y guargar este con cualquier nombre.
+3) Luego, si dar clic en save public key
+4) Luego, dar clic en save private key y poner el mismo nombre con que se guardó la clave pública
+5) Hacer una copia exacta del archivo público creado. Item 3) y cambiar el nombre por authorized_keys, 
+luego reemplazar su contenido por el contenido del archivo del ítem 1)
+6) Copiar el archivo del authorized_keys en la carpeta /root/.ssh/
+7) Ejecutar en terminal chmod 0644 ~/.ssh/authorized_keys
+8) En el directorio /root/.ssh/ ejecutar ls -a para mirar el archivo creado
+9) Luego abrir putty, ingresar ip y en SSH->Auth cargar la clave pública
+10) Ir a connection y para que no se mate la sesión después de un tiempo de inactividad escribir 30 en la casilla Seconds between keepalives
+11) Guardar sesión y listo.
+
+
+***************************************************************************************************
+***************************************************************************************************
+***********************************OTORGAR PERMISOS SOBRE CARPETAS Y ARCHIVOS A USUARIOS Y/O GRUPOS
+***************************************************************************************************
+***************************************************************************************************
+REF: http://www.ite.educacion.es/formacion/materiales/85/cd/linux/m1/permisos_de_archivos_y_carpetas.html
+1) Ver permisos de dir y archivos:
+> ls -l
+-rw-r--r-- developer root 11 mar 14 17:45 dp.log
+2) Cambiar permisos:
+> chmod u+w dp.log
+> chmod u-r,g+w,o-r dp.log
+3) Cambiar usuario propietario y grupo propietario:
+> chown oracle.oinstall dp.log
+
+
+***************************************************************************************************
+***************************************************************************************************
+****************************************************INSTALAR Y CONFIGURAR TORA PARA ORACLE EN LINUX
+***************************************************************************************************
+***************************************************************************************************
+REF: http://www.brainoverload.nl/general/180/install-tora-with-oracle-in-ubuntu-12-04-or-mint-13
+http://blog.adamsbros.org/2015/01/05/tora-install-on-linux-mint-17/
+https://sourceforge.net/p/tora/bugs/853/ en el anterior link se encuentra el path para el error: 
+make[2]: *** [src/CMakeFiles/tora.dir/toextract.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [src/CMakeFiles/tora.dir/all] Error 2
+
+1) Instalar librerías necesarias:
+> sudo apt-get install alien libaio1 g++ gcc autoconf automake fakeroot libqscintilla2-dev lib64gcc1
+Si ya está instalado oracle database, la mayoría ya están instaladas, por lo que haría falta instalar solo las tres últimas.
+2) Editar el archivo /etc/apt/sources.list y agregar la sig. línea:
+deb-src http://archive.ubuntu.com/ubuntu/ precise main restricted universe multiverse
+3) actualizar repositorio: sudo apt-get update
+4) Instalar dependencias de TOra:
+sudo apt-get build-dep tora
+5) Crear directorio para cargar y descarga de los fuentes de TOra:
+> mkdir tora
+> cd tora
+> apt-get source tora
+6) Descargar Oracle client install para linux los siguientes. Guardarlos en una misma carpeta:
+(PUEDE SER CUALQUIER VERSIÓN)
+oracle-instantclient11.2-basiclite-11.2.0.3.0-1.x86_64.rpm
+oracle-instantclient11.2-devel-11.2.0.3.0-1.x86_64.rpm
+oracle-instantclient11.2-sqlplus-11.2.0.3.0-1.x86_64.rpm
+7) Instalar el Oracle client usando alien:
+> sudo alien -iv *.rpm
+8) Editar el ~/.bashrc con las sig. líneas (TENER EN CUENTA LOS COMENTARIOS), cerrar editor y actualizar con source ~/.bashrc:
+# Oracle Settings
+TMP=/tmp; export TMP
+TMPDIR=$TMP; export TMPDIR
+ORACLE_HOSTNAME=127.0.0.1; export ORACLE_HOSTNAME
+ORACLE_UNQNAME=DB11G; export ORACLE_UNQNAME
+ORACLE_BASE=/u01/app/oracle; export ORACLE_BASE
+
+# *************OJO, PRIMERO DEJAR ESTA LÍNEA COMENTADA Y DESPUÉS DEL PASO nro. 15, DESCOMENTARLA Y COMENTAR LA DE ABAJO*************
+#ORACLE_HOME=$ORACLE_BASE/product/11.2.0/dbhome_1; export ORACLE_HOME
+export ORACLE_HOME="/usr/lib/oracle/11.2/client64"
+# *************LO ANTERIOR DEBIDO A QUE SI SE DEJA COMENTADA LA LÍNEA SUPERIOR NO SE PUEDE ACCEDER AL SQLPLUS NI AL LISTENER DESDE CONSOLA
+
+ORACLE_SID=orcl; export ORACLE_SID
+PATH=/usr/sbin:$PATH; export PATH
+PATH=$ORACLE_HOME/bin:$PATH; export PATH
+
+LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib:/usr/lib64; export LD_LIBRARY_PATH
+#export LD_LIBRARY_PATH="${ORACLE_HOME}/lib"
+
+CLASSPATH=$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib; export CLASSPATH
+
+export TNS_ADMIN="${ORACLE_HOME}"
+
+9) También agrear estas variables al archivo ~/.pam_environment:
+ORACLE_HOME DEFAULT=/usr/lib/oracle/11.2/client64
+TNS_ADMIN DEFAULT=/usr/lib/oracle/11.2/client64
+
+10) Agregar el LD_LIBRARY_PATH al ldconfig:
+> echo '/usr/lib/oracle/11.2/client64/lib' | sudo tee -a  /etc/ld.so.conf.d/oracle.conf
+> sudo ldconfig
+refrescar consola.
+
+11) Agregar algunos links simbólicos para solucionar algunos problemas de compatibilidad:
+> sudo ln -s /usr/include/oracle/11.2/client64 $ORACLE_HOME/include
+
+12) Editar el archivo tora/tora_2.3.1/debian/rules agregando la sig. línea:
+DEB_CMAKE_EXTRA_FLAGS := -DORACLE_PATH_INCLUDES=/usr/include/oracle/11.2/client64 -DORACLE_PATH_LIB=/usr/lib/oracle/11.2/client64/lib -DENABLE_ORACLE=1
+
+13) Editar el archivo tora/tora-2.1.3/src/toextract.h agregando el sig. include
+#include <unistd.h> después de la línea #include <QString> y antes de class QWidget;
+
+14) Ejecutar la carga de TOra. Esto creará un archivo .deb para la instalación de TOra en el dir tora/:
+> fakeroot debian/rules binary
+
+15) Ejecutar instalación de TOra:
+> sudo dpkg -i ../tora_2.1.3-1build2_amd64.deb
+
+16) Lanzar tora para configurar conexión:
+En la conexión por instan client pedirá:
+usuario = cualquier schema, password, host = localhost, port, schema, database = ORCL(debe ser igual al alias en el tnsnames.ora)
+
+
+***************************************************************************************************
+***************************************************************************************************
+*********************************************************************CREAR ALIAS PARA UN PATH LARGO
+***************************************************************************************************
+***************************************************************************************************
+- Editar el .bashrc:
+** En linux: sudo gedit ~/.bashrc
+** En windows con cygwin: notepad.exe ~/bashrc
+Agregar las líneas como las que siguen
+#ALIAS TO SPRING BOOT PRACTICES
+alias springboot='cd /cygdrive/c/Users/developeracer/eclipse-workspace/' 
+#ALIAS TO ANGULAR PRACTICES
+alias angular='cd /cygdrive/c/Users/developeracer/Documents/WebStormProjects/developerPractices/ud/angular2/' 
+
+-Eliminar alias:
+> unalias imagenes
+
+-Mostrar los alias:
+> alias

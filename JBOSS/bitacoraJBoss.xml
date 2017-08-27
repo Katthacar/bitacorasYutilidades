@@ -1,0 +1,124 @@
+***************************************************************************************************
+***************************************************************************************************
+********************************************************************************INSTALAR JBOSS-AS-7
+1) descomprimir .zip
+2) dirigirse a JBOSS_HOME/bin y ejecutar: ./add-user.sh, seguir los pasos
+3) Para acceder desde el navegador al panel de control de administrador seguir los sig. pasos:
+3.1) Modificar el archivo standalone.xml asi:
+
+Antes
+<interfaces>
+        <interface name="management">
+            <inet-address value="${jboss.bind.address.management:192.168.101.1}"/>
+        </interface>
+        <interface name="public">
+            <inet-address value="${jboss.bind.address:192.168.101.1}"/>
+        </interface>
+		
+Después
+<interfaces>
+    <interface name="management">
+       <any-ipv4-address/>
+    </interface>
+    <interface name="public">
+       <any-ipv4-address/>
+    </interface>
+Referencia: http://solovidabien.blogspot.com.co/2015/09/como-habilitar-jboss-as-7-para-aceptar.html
+
+NOTA: JBOSS no trabaja con jdk 8, por lo que se debe instalar java oracle 7 y cambiar la variable JAVA_HOME a esta version:
+- export JAVA_HOME=ruta de java 7
+/usr/lib/jvm/java-8-oracle/bin/java
+export JAVA_HOME=/usr/lib/jvm/java-7-oracle
+echo $JAVA_HOME
+Cuando se necesite cambiar la versión a trabajar de java, escribir lo sig: sudo update-java-alternatives -s java-7-oracle
+ó sudo update-java-alternatives -s java-8-oracle si se necesita trabajar con java oracle 8
+
+4) Para iniciar jboss: ir a JBOSS_HOME/bin y ejecutar ./standalone.sh&, cuando termine, pulsar enter para dejar trabajando el servicio.
+5) Para detener jboss: ir a JBOSS_HOME/bin y ejecutar ./jboss-cli.sh --connect command=:shutdown
+
+
+***************************************************************************************************
+***************************************************************************************************
+*********************************HABILITAR LA CONSOLA WEB DE ADMINISTRACIÓN EN JBOSS AS 7 Y WILDFLY
+Lo primero que tendremos que hacer es crear un usuario (no confundir: NO es un usuario del sistema) con permisos de administración. 
+Para crear un usuario administrador tenemos a nuestra disposición un script en el directorio /bin de nuestro servidor Jboss llamado add-user:
+
+Script para añadir usuarios a Jboss
+Script para añadir usuarios a Jboss
+
+En mi caso estoy trabajando en una plataforma Linux, aunque también tenéis add-user.bat para los que administréis desde Windows. Ejecuto el script:
+
+add-user.sh
+En cuanto a las preguntas subsiguientes, contestaremos:
+
+En la pregunta del tipo de usuario, seleccionaremos "a" (Management User).
+Cuando pregunte por ManagementRealm presionamos Enter, dejaremos el que viene por defecto.
+Introduciremos el usuario y la contraseña que consideremos oportunos. Estas credenciales serán únicamente para Jboss, 
+como dije anteriormente no es un usuario de sistema.
+Finalmente, confirmamos y el script se encargará de realizar las tareas pertinentes.
+Añadiendo al usuario administrativo
+Añadiendo al usuario administrativo
+
+Configurar el mapeo de interfaz
+
+Además tendremos que modificar ciertos parámetros de las interfaces del servidor Jboss. Por defecto, 
+la interfaz administrativa sólo escucha en la IP local 127.0.0.1 por lo que si intentamos acceder a la 
+consola web desde una máquina remota, no será alcanzable.
+
+Si nuestro Jboss se va a ejecutar en modo de dominio, el fichero que tendremos que modificar será:
+
+$JBOSS_HOME/domain/configuration/host.xml
+Por el contrario, si vamos a ejecutarlo en modo standalone, tendremos que modificar el profile que vayamos a utilizar 
+durante la ejecución del servidor de aplicaciones. Ese profile puede ser:
+
+$JBOSS_HOME/standalone/configuration/standalone.xml
+$JBOSS_HOME/standalone/configuration/standalone-ha.xml
+$JBOSS_HOME/standalone/configuration/standalone-full-ha.xml
+$JBOSS_HOME/standalone/configuration/standalone-full.xml
+Una vez abierto el fichero, por ejemplo con vi, tendréis que buscar la entrada siguiente:
+
+jboss.bind.address.management
+
+Como véis, mi interfaz administrativa apunta a 127.0.0.1. La IP del servidor de Jboss es 192.168.2.101. Por lo tanto, cambiaremos:
+
+jboss.bind.address.management:127.0.0.1
+Por esto:
+
+jboss.bind.address.management:192.168.2.101
+Reiniciamos el servidor de aplicaciones. Una vez iniciado, desde nuestro ordenador intentamos acceder a la interfaz web. En el navegador ponemos:
+
+http://192.168.2.101:9990/console
+
+
+***************************************************************************************************
+***************************************************************************************************
+************************************************************* WILDFLY COMO SERVICIO EN LINUX UBUNTU
+REF: https://gesker.wordpress.com/2016/02/09/wildfly-10-on-ubuntu-15-10/
+1) Tener instalada la última versión de JAVA
+2) Crear usuario para wildfly: adduser --no-create-home --disabled-password --disabled-login wildfly
+3) Descargar wildfly: 
+cd /svr
+wget --tries=0 --continue http://download.jboss.org/wildfly/10.0.0.Final/wildfly-10.0.0.Final.tar.gz
+4) Estraer wildfly: tar -xzvf wildfly-10.0.0.Final.tar.gz
+5) Crear enlace simbólico: ln -s wildfly-10.0.0.Final wildfly
+6) Cambiar la propiedad de directorio y enlace simbólico a wildfly: chown -R wildfly.wildfly wildfly*
+7) Copiar el archivo wildfly-init-debian.sh del enlace simbólico a 
+etc/init.d/wildfly: cp /srv/wildfly/docs/contrib/scripts/init.d/wildfly-init-debian.sh /etc/init.d/wildfly
+8) Ejecutar update-rc.d para asegurarse de que wildfly inicie en reboot el S.O: 
+update-rc.d /etc/init.d/wildfly defaults (si sale error, cuando se reinicie el 
+S.O se debe iniciar manualmente el servicio de wildfly)
+9) Copiar wildfly.conf a la carpeta default: 
+cp /srv/wildfly/docs/contrib/scripts/init.d/wildfly.conf /etc/default/wildfly
+cd /etc/default/wildfly
+10) Editar el archivo wildfly contenido en /etc/default/wildfly, descomentando o editando las sig. líneas
+JBOSS_HOME="/srv/wildfly"
+JBOSS_USER=wildfly
+JBOSS_MODE=standalone
+JBOSS_CONFIG=standalone-full.xml — Change configuration file name in order to run full Java EE 7 Stack
+STARTUP_WAIT=120 –Probably overkill wait time
+SHUTDOWN_WAIT=120 –Probably overkill wait time
+JBOSS_CONSOLE_LOG="/var/log/wildfly/console.log"
+11) Agregar usuario wildfly anteriormente creado en el sistema wildfly:
+cd /srv/wildfly/bin
+./add-user.sh, seguir los pasos
+12) Iniciar servicios: service wildfly start

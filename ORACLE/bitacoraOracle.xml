@@ -1,0 +1,718 @@
+***************************************************************************************************
+***************************************************************************************************
+*************************CONFIGURAR PL/SQL DEVELOPER PARA TRABAJAR EN WINDOWS CON UNA DB DE 64 BITS
+***************************************************************************************************
+***************************************************************************************************
+** Link a referencias:
+a) http://o7planning.org/web/fe/default/en/document/20948/guide-to-installing-and-configuring-pl-sql-developer#a27427
+b) http://jerrywens.blog.com/2011/01/26/plsql-developer8-oracle11g-windows-x86_64/
+
+1) Instalar PL/SQL Developer
+2) Descargar instantclient-basic-win32-11.2.0.1.0.zip. link: http://www.oracle.com/technetwork/database/features/instant-client/index-097480.html
+3) Descomprimir instantclient-basic-win32-11.2.0.1.0.zip en una carpeta en el directorio C: Ej: "C:\instantclient_11_2?
+4) Ejecutar PL/SQL Developer -> Tools -> Preferences
+5) Copiar la ruta del archivo "OCI.dll" que se descargó con el instantclient-basic-win32-11.2.0.1.0 Ej:
+"C:\instantclient_11_2\oci.dll"
+6) Clic en Ok
+7) Agregar la ruta del instantclient_11_2 en el Path
+8) Crear un .BAT con el sig. código:
+We create a bat file for start the PLSQL.
+@echo off
+set path=C:\instantclient_11_2
+set TNS_ADMIN=C:\app\product\11.2.0\client_1\network\admin
+set NLS_LANG=AMERICAN_AMERICA.UTF8
+cd “C:\Program Files\PLSQL Developer”
+start plsqldev.exe
+9) Guardarlo en una carpeta y crear un acceso directo en el escritorio, si se desea cambiar el ícono del .BAT y
+convertirlo a .EXE con la aplicación "Quick Batch File Compiler"
+
+
+***************************************************************************************************
+***************************************************************************************************
+***************************************RECUPERAR LA CONTRASEÑA DEL USUARIO SYS Y SYSTEM (ORACLE 9I)
+***************************************************************************************************
+***************************************************************************************************
+Submitted by il_masacratore on 17 July, 2009 - 12:15 Oracle password seguridad Bases de datos
+Si pasais a ocupar el puesto de administrador de Oracle y la persona saliente no os deja anotadas las contraseñas de los usuarios sys y system de la base de datos se puede proceder de la siguiente manera para intentar recuperarlas. Si tenemos el usuario root podemos cambiar la contraseña de sys y system de Oracle.
+Primero debemos conectarnos al servidor con el usuario en el que corre la base de datos o root y cambiar. A continuación cambiaremos la contraseña del usuario sys de Oracle:
+$ sqlplus "/ as sysdba"
+SQL*Plus: Release 9.2.0.1.0 - Production on Mon Apr 5 15:32:09 2004
+Copyright (c) 1982, 2002, Oracle Corporation.  All rights reserved.
+Connected to:
+Oracle9i Enterprise Edition Release 9.2.0.1.0 - Production
+With the OLAP and Oracle Data Mining options
+JServer Release 9.2.0.1.0 - Production
+
+SQL> show user
+USER is "SYS"
+
+SQL> passw system
+Changing password for system
+New password:
+Retype new password:
+Password changed
+SQL> quit
+ 
+Luego cambiaremos la contraseña del usuario system de Oracle: 
+$ sqlplus "/ as system"
+
+SQL*Plus: Release 9.2.0.1.0 - Production on Mon Apr 5 15:36:45 2004
+Copyright (c) 1982, 2002, Oracle Corporation.  All rights reserved.
+
+SP2-0306: Invalid option.
+Usage: CONN[ECT] [logon] [AS {SYSDBA|SYSOPER}]
+where <logon>  ::= <username>[/<password>][@<connect_string>] | /
+Enter user-name: system
+Enter password:
+Connected to:
+
+Oracle9i Enterprise Edition Release 9.2.0.1.0 - Production
+With the OLAP and Oracle Data Mining options
+JServer Release 9.2.0.1.0 - Production
+
+SQL> passw sys
+
+Changing password for sys
+New password:
+Retype new password:
+Password changed
+
+SQL> quit
+Ahora ya deberíamos poder conectarnos a la base de datos Oracle como usuario sys y system, utilizando los nuevos passwords.
+
+
+***************************************************************************************************
+***************************************************************************************************
+******************************************************************MIRAR VERSIÓN DE ORACLE INSTALADA
+***************************************************************************************************
+***************************************************************************************************
+select * from product_component_version;
+
+
+***************************************************************************************************
+***************************************************************************************************
+****************************************************************************CAMBIAR CLAVE A USUARIO
+***************************************************************************************************
+***************************************************************************************************
+SQL> ALTER USER SYSTEM IDENTIFIED BY “password”;
+User altered.
+
+
+***************************************************************************************************
+***************************************************************************************************
+***************************************************************************VER LOS USUARIOS CREADOS
+***************************************************************************************************
+***************************************************************************************************
+select username,account_status from dba_users;
+
+
+***************************************************************************************************
+***************************************************************************************************
+**************************************************************************************CREAR USUARIO
+***************************************************************************************************
+***************************************************************************************************
+1) CMD
+2) Contectar con sqlplus
+3) create user alvaro identified by xxx?345 default tablespace users;
+
+Ahora expliquemos la instrucción:
+create user alvaro .- Crea un usuario nuevo identificado por “alvaro”, es decir es el id del usuario.
+identified by xxx?345  .- Sencillamente es el password del usuario que creamos
+default tablespace users; .- Se especifica el espacio de tabla USERS, 
+si se omitiera, los objetos creados por el usuario “alvaro”, 
+se almacenarán por defecto en el tablespace System que es el 
+lugar donde se encuentra almacenado el diccionario de datos, 
+finalmente concluimos con “;” para que se procese la instrucción.
+
+4) Grant connect to nombre_usuario;
+5) grant resource to nombre_usuario;
+6) Verificar cuenta creada: disc; y luego conn nombre_usuario;
+
+
+***************************************************************************************************
+***************************************************************************************************
+***********************************************ELIMINAR USUARIO Y/O ESQUEMA Y SUS OBJETOS DE ORACLE
+***************************************************************************************************
+***************************************************************************************************
+1) ingresar como system o sysdba a sqlplus
+2) tipear drop user nombre_usuario cascade;
+
+
+***************************************************************************************************
+***************************************************************************************************
+*******************************************************************ELIMINAR BASE DE DATOS DE ORACLE
+***************************************************************************************************
+***************************************************************************************************
+1) Desde sqlplus y como sysdba Bajamos la base de datos
+SQL> shutdown immediate;
+
+2) Montamos la base en modo exclusivo y ‘restricted’
+SQL> startup mount exclusive restrict;
+
+3) Por último procedemos a eliminar la base
+SQL> drop database;
+
+
+***************************************************************************************************
+***************************************************************************************************
+*******************************************************************DESINSTALAR ORACLE CORRECTAMENTE
+***************************************************************************************************
+***************************************************************************************************
+1) El primer paso es deshabilitar los servicios que Oracle Database 11g nos crea,
+para ello pulsamos la tecla Windows + R y escribimos services.msc.
+
+2) Deshabilitar todos los servicios de Oracle, para ello, 
+pinchamos uno a uno con el click derecho a propiedades, 
+en la ventana que nos aparece, en el Tipo de inicio, lo pondremos en deshabilitado.
+
+3) Buscamos la ruta donde tenemos instalado Oracle Database 11g,
+EJ: E:\app y le cambiamos el nombre a esa carpeta a por ejemplo app_KILL.
+
+4) Reiniciar el pc.
+
+5) Windows + r y tipear regedit.
+
+6) entrar a:
+HKEY_LOCAL_MACHINE/SOFTWARE/ORACLE –> eliminar toda la carpeta.
+HKEY_LOCAL_MACHINE/SYSTEM/CurrentControlSet/Services –> eliminar todos los que empiecen por Oracle.
+
+7) Eliminar la carpeta del paso 3.
+
+8) Eliminar todos los accesos directos y toda carpeta con relacion a oracle.
+
+9) Pasar CCleaner y reiniciar.
+
+
+***************************************************************************************************
+***************************************************************************************************
+***********************************************************************************CREAR DIRECTORIO
+***************************************************************************************************
+***************************************************************************************************
+# select * from all_directories;
+
+1) create [or replace] directory nombre_directorio as 'ruta_directorio';
+> CREATE OR REPLACE DIRECTORY test_dir AS '/u01/app/oracle/oradata/';
+No importa si la ruta ya está asignada a otro nombre de directorio.
+
+2) grant read, write on directory nombre_directorio to nombre_usuario;
+> GRANT READ, WRITE ON DIRECTORY DATA_PUMP_DIR TO scott;
+
+***************************************************************************************************
+***************************************************************************************************
+**********************************************************************EXPORTAR E IMPORTAR CON IMPDP
+***************************************************************************************************
+***************************************************************************************************
+# References: https://oracle-base.com/articles/10g/oracle-data-pump-10g
+# Schema Exports/Imports
+1) expdp user/pass@SID directory=nombre_directorio dumpfile=nombre_archivo.dmp logfile=cualquier.log
+> expdp scott/tiger@db10g schemas=SCOTT directory=TEST_DIR dumpfile=SCOTT.dmp logfile=expdpSCOTT.log
+
+# Para importar, el archivo .dmp debe estar ubicado en la ruta del directorio creado
+2) impdp user/pass directory=nombre_directorio dumpfile=nombre_archivo.dmp logfile=cualquier.log
+> impdp scott/tiger@db10g schemas=SCOTT directory=TEST_DIR dumpfile=SCOTT.dmp logfile=impdpSCOTT.log
+
+# Table Exports/Imports
+3) expdp user/pass tables=tbl1,tbl2 directory=nombre_directorio dumpfile=nombre_archivo.dmp logfile=cualquier.log
+> expdp scott/tiger@db10g tables=EMP,DEPT directory=TEST_DIR dumpfile=EMP_DEPT.dmp logfile=expdpEMP_DEPT.log
+
+NOTA: Al importar tablas de un esquema a otro puede lanzar errores del tipo (ORA-31655,ORA-39154) y/o también errores por falta de algún 
+tablespace, por lo que se debe crear el tablespace y ejecutar el import como el ejemplo de abajo:
+# create tablespace nombre_tablespace datafile 'directorio_donde_quedará_la_tablespace.dbf' size 200m;
+> create tablespace TSD_INTERFACE datafile 'C:\APP\DEVELOPERACER\ORADATA\ORCL\TSD_INTERFACE01.DBF' size 12300m;
+# impdp user/user@sid tables=table1,table2,table3 directory=directory dumpfile=namedump.dmp logfile=namelog.log remap_schema=schema_source:schema_target ignore=y
+> impdp macro/macro@orcl TABLES=INTEGRA.SIMBAL2,INTEGRA.SIMBAL3 directory=EXPDP_DIR dumpfile=EXPDP_INTEGRA_SIMBAL_2_3_31052017.dmp logfile=EXPDP_INTEGRA_SIMBAL_2_3_31052017.log remap_schema=INTEGRA:MACRO ignore=y
+
+4) impdp user/pass tables=tbl1,tbl2 directory=nombre_directorio dumpfile=nombre_archivo.dmp logfile=cualquier.log
+> impdp scott/tiger@db10g tables=EMP,DEPT directory=TEST_DIR dumpfile=EMP_DEPT.dmp logfile=impdpEMP_DEPT.log
+
+5) Export/Import full database
+> expdp system/password@db10g full=Y directory=TEST_DIR dumpfile=DB10G.dmp logfile=expdpDB10G.log
+> impdp system/password@db10g full=Y directory=TEST_DIR dumpfile=DB10G.dmp logfile=impdpDB10G.log
+
+***************************************************************************************************
+***************************************************************************************************
+***********************************************************************************CREAR TABLESPACE
+***************************************************************************************************
+***************************************************************************************************
+1) create tablespace nombre_tablespace datafile 'directorio_donde_quedará_la_tablespace.dbf' size 200m;
+> create tablespace TSD_INTERFACE datafile 'C:\APP\DEVELOPERACER\ORADATA\ORCL\TSD_INTERFACE01.DBF' size 12300m;
+2) mostrar los tablespaces: select tablespace_name, extent_management from dba_tablespaces;
+
+
+**********************************************************************************************************************************
+**********************************************************************************************************************************
+SELECCIONAR NOMBRE DE TABLESPACES, TABLESPACE RELACIONADOS, ESPACIO ASIGNADO, ESPACIO LIBRE, Y PORCENTAJE LIBRE DE LAS TABLESPACES
+**********************************************************************************************************************************
+**********************************************************************************************************************************
+1) SELECT
+   df.tablespace_name,
+   df.file_name,
+   df.bytes/1024 Allocated_kb,
+   free.free_kb,
+   Round(free.free_kb/(df.bytes/1024)*100) Percent_Free
+FROM
+   dba_data_files df,
+   (SELECT file_id, SUM(bytes)/1024 free_kb
+    FROM dba_free_space GROUP BY file_id) free
+WHERE
+   df.file_id=free.file_id
+ORDER BY
+   Percent_Free;
+
+
+***************************************************************************************************
+***************************************************************************************************
+******************************************************ELIMINAR TABLESPACE CON ARCHIVOS RELACIONADOS
+***************************************************************************************************
+***************************************************************************************************
+1) DROP TABLESPACE nombre_tablespace INCLUDING CONTENTS AND DATAFILES;
+
+
+***************************************************************************************************
+***************************************************************************************************
+*********VER NÚMERO DE CONEXIONES ACTUALES A ORACLE AGRUPADO POR APLICACIÓN QUE REALIZA LA CONEXIÓN
+***************************************************************************************************
+***************************************************************************************************
+select program Aplicacion, count(program) Numero_Sesiones
+from v$session
+group by program 
+order by Numero_Sesiones desc
+
+
+***************************************************************************************************
+***************************************************************************************************
+******************************VER USUARIOS DE ORACLE CONECTADOS Y EL NÚMERO DE SESIONES POR USUARIO
+***************************************************************************************************
+***************************************************************************************************
+select username Usuario_Oracle, count(username) Numero_Sesiones 
+from v$session group by username order by Numero_Sesiones desc
+
+
+***************************************************************************************************
+***************************************************************************************************
+*******************************************************************MEMORIA SHARE_POOL LIBRE Y USADA
+***************************************************************************************************
+***************************************************************************************************
+SELECT name,to_number(value) bytes 
+  FROM v$parameter
+ WHERE name ='shared_pool_size'
+UNION ALL
+SELECT name,bytes 
+  FROM v$sgastat
+ WHERE pool = 'shared pool'
+   AND name = 'free memory';
+
+
+***************************************************************************************************
+***************************************************************************************************
+********************************************************************INFORMACIÓN DE CONEXIÓN A LA DB
+***************************************************************************************************
+***************************************************************************************************
+SELECT SID,            -- Identificador de sesión
+       osuser,         -- Usuario de sistema operativo
+       username,       -- Usuario de base de datos
+       machine,        -- Máquina desde la que se realiza la conexión
+       program,        -- Programa, que realiza la conexión
+       logon_time,     -- Hora de conexión
+       Lockwait,       -- Identifica si hay bloqueo
+       a.sql_text      -- Sql lanzado
+  FROM v$session, v$sqlarea a
+ ORDER BY program;
+
+
+***************************************************************************************************
+***************************************************************************************************
+************************************************************************VER LAS SESSIONES INACTIVAS
+***************************************************************************************************
+***************************************************************************************************
+SELECT * FROM SYS.V_$SESSION WHERE STATUS = 'INACTIVE' AND SCHEMANAME<>'SYS';
+
+
+***************************************************************************************************
+***************************************************************************************************
+*****************************************************************************MATAR PROCESOS ACTIVOS
+***************************************************************************************************
+***************************************************************************************************
+--Seleccionar procesos por usuario
+select sid, serial#, status from v$session where USERNAME='SBBT_ADMINIS';
+SELECT a.USERNAME, a.SID, a.SERIAL#, b.SPID FROM v$session a, v$process b WHERE  a.PADDR= b.ADDR ORDER by 1;
+SELECT V.USERNAME, V.STATUS, V.OSUSER, V.MACHINE, V.PROGRAM, V.SID, SERIAL#, V.* FROM v$session V WHERE USERNAME = 'MACRO'; 
+--Matar proceso activos
+ALTER SYSTEM KILL SESSION '49, 97';
+
+
+***************************************************************************************************
+***************************************************************************************************
+********************************************************************INSTALAR ORACLE 11G XE EN LINUX
+***************************************************************************************************
+***************************************************************************************************
+--http://community.linuxmint.com/tutorial/view/1962
+
+***************************************************************************************************
+***************************************************************************************************
+****************************************************INSTALAR ORACLE 11G ENTERPRISE EDITION EN LINUX
+***************************************************************************************************
+***************************************************************************************************
+Seguir la guía de los sitios:
+http://tutorialforlinux.com/2014/10/03/how-to-install-oracle-11g-r2-database-on-ubuntu-14-04-trusty-lts-64bit-easy-guide/
+http://tutorialforlinux.com/2012/06/11/oracle11gdatabasetroubleshootingguides/
+https://www.youtube.com/watch?v=3lLaFCrcln4
+
+Tener en cuenta que no es necesario crea un usuario oracle, solo asignar al usuario root a los grupos oinstall, dba, oper y asmadmin
+> sudo usermod -a -G oinstall,dba,oper,asmadmin nombre_usuario
+
+***************************************************************************************************
+***************************************************************************************************
+*****************************************************************INSTALAR PL/SQL DEVELOPER EN LINUX
+***************************************************************************************************
+***************************************************************************************************
+--https://dba010.wordpress.com/2012/08/14/install-plsql-developer-under-wine-on-linux/
+--Si sale el error:
+Application Error 
+Exception EdxGdipException in module 
+AdminSetup.exe at 000B4612. 
+Invalid operation in GDI+ (Code: 1).
+Mirar la pág: http://ubuntuforums.org/showthread.php?t=2252490
+La solución es instalar la versión 8.0 del plsql developer.
+
+
+***************************************************************************************************
+***************************************************************************************************
+*************************************************************CONECTAR SQLPLUS CON NOMBRE DE USUARIO
+***************************************************************************************************
+***************************************************************************************************
+sqlplus usuario@SID/password
+EJ: sqlplus simbal_eca@XE/RGA2014
+Otras versiones simplemente usuario/contrasena
+
+
+***************************************************************************************************
+***************************************************************************************************
+*************************************************************************CUANTO ESPACIO OCUPA LA DB
+***************************************************************************************************
+***************************************************************************************************
+SELECT round(sum(used.bytes) / 1024 / 1024 / 1024 ) || ' GB' "Database Size", 
+round(sum(used.bytes) / 1024 / 1024 / 1024 ) - round(free.p / 1024 / 1024 / 1024) || ' GB' "Used space", 
+round(free.p / 1024 / 1024 / 1024) || ' GB' "Free space" FROM 
+(select bytes from v$datafile union all select bytes from v$tempfile union all select bytes from v$log) used, 
+(select sum(bytes) as p from dba_free_space) free GROUP BY free.p;
+
+
+***************************************************************************************************
+***************************************************************************************************
+***********************************************************************TAMAÑO EN GB DE LOS ESQUEMAS
+***************************************************************************************************
+***************************************************************************************************
+SELECT round(SUM(BYTES)/1024/1024/1024), owner FROM DBA_SEGMENTS group by owner; WHERE OWNER=nuestro_owner 
+GROUP BY SEGMENT_NAME, SEGMENT_TYPE ORDER BY 2,1;
+
+
+***************************************************************************************************
+***************************************************************************************************
+***************************************************************************************OPTIMIZAR DB
+***************************************************************************************************
+***************************************************************************************************
+http://optimizacionsql.blogspot.com.co/
+Ejecutar el sig. procedimiento con permisos de dba y para cada tabla
+begin
+   DBMS_STATS.GATHER_TABLE_STATS(OWNNAME=>'nombre_usuario',
+   TABNAME=>'nombre_tabla',
+   ESTIMATE_PERCENT=>dbms_stats.auto_sample_size,
+   METHOD_OPT => 'FOR ALL INDEXED COLUMNS SIZE 1',
+   DEGREE=>4);
+end;
+
+
+***************************************************************************************************
+***************************************************************************************************
+***********************************************************TABLESPACES Y PROPIETARIOS DE LOS MISMOS
+***************************************************************************************************
+***************************************************************************************************
+select owner, decode(partition_name, null, segment_name,  segment_name || ':' || partition_name) name, 
+segment_type, tablespace_name,bytes,initial_extent, next_extent, PCT_INCREASE, extents, max_extents 
+from dba_segments Where 1=1 And extents > 1 order by 9 desc, 3
+
+
+***************************************************************************************************
+***************************************************************************************************
+**********************************************************ENCONTRAR NOMBRE DE COLUMNA EN LAS TABLAS
+***************************************************************************************************
+***************************************************************************************************
+SELECT TABLE_NAME FROM ALL_TAB_COLUMNS WHERE COLUMN_NAME = 'NOMBRE_COLUMNA_BUSCADA';
+
+
+***************************************************************************************************
+***************************************************************************************************
+*****************************************************BUSCAR REFERENCIAS A FOREIGN KEYS DE UNA TABLA
+***************************************************************************************************
+***************************************************************************************************
+select table_name, constraint_name, status, owner
+from all_constraints
+where r_owner = 'MACRO'
+and constraint_type = 'R'
+and r_constraint_name in
+ (
+   select constraint_name from all_constraints
+   where constraint_type in ('P', 'U')
+   and table_name = 'COMPONENTE'
+   and owner = 'MACRO'
+ )
+order by table_name, constraint_name;
+
+
+***************************************************************************************************
+***************************************************************************************************
+*********************************************************************DEFINIR ORACLE_HOME, PATH, ETC
+***************************************************************************************************
+***************************************************************************************************
+export PATH=$PATH:/u01/app/oracle/product/11.2.0/dbhome_1/bin
+export ORACLE_HOME=/u01/app/oracle/product/11.2.0/dbhome_1
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib
+export TNS_ADMIN=/u01/app/oracle/product/11.2.0/dbhome_1/network/admin
+
+
+***************************************************************************************************
+***************************************************************************************************
+********************************************ORA-12162 TNS:net service name is incorrectly specified
+***************************************************************************************************
+***************************************************************************************************
+To fix this error in Windows, set your $ORACLE_HOME:
+
+c:> set ORACLE_SID=fred
+
+In Linux, these commands sets ORACLE_HOME and $ORACLE_SID as follows:
+
+ORACLE_HOME=ORACLE_HOME=/u01/app/oracle/product/11.2.0/dbhome_1; export ORACLE_HOME
+ORACLE_SID=orcl; export ORACLE_SID
+
+
+***************************************************************************************************
+***************************************************************************************************
+************************************************************************CREAR USUARIO EN ORACLE 12C
+***************************************************************************************************
+***************************************************************************************************
+1) Al crear un usuario en una bbdd con contenedor nos encontraremos con un error similar a:
+este:
+SQL> create user prueba identified by prueba;
+create user prueba identified by prueba
+ERROR at line 1:
+ORA-65096: invalid common user or role name
+
+2) Para solucionar esto (siempre y cuando comencemos a trabajar con contenedores), debemos decidir 
+si el usuario va a administrar multiples CDB's o solo un PDB, para ello debemos configurar el contenedor 
+correcto en nuestra bbdd, así que comprobaremos los PDB's disponibles:
+SQL> select PDB from v$services;
+PDB
+------------------------------
+T12P2
+T12P1
+CDB$ROOT
+CDB$ROOT
+CDB$ROOT
+CDB$ROOT
+
+3) Para crear un usuario comun en el contenedor, debemos comprobar el nombre de la conexion:
+
+SQL> show con_name
+
+CON_NAME
+------------
+CDB$ROOT
+
+4) Conociendo el nombre del contenedor, lo indicamos en el comando para crear el usuario:
+
+create user c##prueba identified by prueba;
+
+5) Para crear un usuario local primero debemos identificar el contenedor:
+
+SQL> alter session set container=T12P1;
+
+Session altered.
+
+SQL> show con_name
+
+CON_NAME
+-----------
+T12P1
+
+6) Al definir el contenedor, ya no tendremos que utilizar el c## delante del usuario:
+
+SQL> create user prueba identified by prueba;
+
+User created.
+
+7) Ahora podremos ver ambos usuarios (común y local) en la tabla DBA_USERS:
+
+SQL> select username from dba_users where username like '%PRUEBA%';
+
+USERNAME
+-----------------------------------------------------------------
+C##PRUEBA
+PRUEBA
+
+
+***************************************************************************************************
+***************************************************************************************************
+******************************************************************CAMBIAR NOMBRE A SCHEMA O USUARIO
+***************************************************************************************************
+***************************************************************************************************
+1) Como sysdba, ejecutar:
+update 
+   sys.user$ 
+set 
+   name='new_name' 
+where 
+   user#=N 
+and 
+   name='old_name';
+
+
+***************************************************************************************************
+***************************************************************************************************
+*********************************************************************PROCEDURE PARA ENCRIPTAR CLAVE
+***************************************************************************************************
+***************************************************************************************************
+CREATE OR REPLACE PROCEDURE ENCRIPTAR (Passwd In Varchar2, PasswdEnc In Out Varchar2)IS
+  Pwv       Varchar2(20);
+  Pwn       Varchar2(30);
+  Letra     Varchar2(1);
+  Temp      Varchar2(3);
+  Pwnn      Number(30);
+  Pwnnpi    Number(30);
+  Pwnnpich  Varchar2(30);
+  l         Number(8);
+  i         Number(8);
+BEGIN
+ Pwv := Passwd;
+ l   := Length(Pwv);
+ i   := 0;
+ Pwn := '';
+ Loop
+  i      := i+1;
+  Letra  := Substr(Pwv,i,1);
+  Temp   := Lpad(To_Char(Ascii(Letra)),3,'0');
+  Pwn    := Pwn||Temp;
+  Exit When i=l;
+ End Loop;
+  Pwnn      := To_Number(Pwn);
+  Pwnnpi    := Trunc(Pwnn/3.14159);
+  Pwnnpich  := To_Char(Pwnnpi);
+  PasswdEnc := Pwnnpich;
+END;
+
+
+***************************************************************************************************
+***************************************************************************************************
+***********************************************************SELECCIONAR DATOS SEGÚN CLAVE ENCRIPTADA
+***************************************************************************************************
+***************************************************************************************************
+select *from usuarios U where U.PASS=RAWTOHEX(UTL_RAW.CAST_TO_RAW(sys.dbms_obfuscation_toolkit.MD5(input_string => 'siseps')));
+
+***************************************************************************************************
+***************************************************************************************************
+**************************************************************ACTUALIZAR CLAVE ENCRIPTADA EN ORACLE
+***************************************************************************************************
+***************************************************************************************************
+update usuarios u set u.pass = RAWTOHEX(UTL_RAW.CAST_TO_RAW(sys.dbms_obfuscation_toolkit.md5(input_string => 'siseps' )))
+where u.codigo = 'SISEPS';
+
+***************************************************************************************************
+***************************************************************************************************
+**************************************************************************ARRANCAR Y DETENER ORACLE
+***************************************************************************************************
+***************************************************************************************************
+Referencia: http://www.orasite.com/instalacion-y-configuracion/arranque-y-parada-de-una-base-de-datos-oracle
+# Arranque
+1) Arranque normal: startup
+2) Arranque forzado: startup force
+
+# Detenido
+1) Espera a que los usuarios conectados actualmente finalicen TODAS las operaciones.
+Evita nuevas conexiones. Los usuarios que intentan conectarse reciben el mensaje "Shutdown in progress".
+Cierra y desmonta la B.D. Cierra la SGA para los procesos background.
+No necesita recuperacion al arrancar la base de datos.
+> shutdown normal
+
+2) Espera a que las transacciones actuales se completen.
+Evita nuevas transacciones y nuevas conexiones. Los usuarios que intentan conectarse o los que ya están conectados al intentar realizar una nueva transacción reciben el mensaje "Shutdown in progress".
+El proceso PMON finaliza las sesiones no activas y realiza ROLLBACK de aquellas transacciones que no estén validadas.
+Cierra y desmonta la B.D. Cierra la SGA para los procesos background.
+No necesita recuperacion al arrancar la base de datos.
+> shutdown immediate
+
+3) Parada drástica, no espera a que los usuarios conectados actualmente finalicen sus transacciones. El usuario conectado recibe el mensaje "No logged on".
+No se realiza ROLLBACK de las transacciones pendientes.
+El proceso PMON finaliza las sesiones no activas y realiza ROLLBACK de aquellas transacciones que no estén validadas.
+SI necesita recuperacion al arrancar la base de datos.
+> shutdown abort
+
+***************************************************************************************************
+***************************************************************************************************
+**************************************************************IMPRIMIR POR PANTALLA EN SQLDEVELOPER
+***************************************************************************************************
+***************************************************************************************************
+> En el editor sqldeveloper digitar: set serveroutput on;
+
+
+***************************************************************************************************
+***************************************************************************************************
+***************************************************************PROCEDURE O BLOQUE ANÓNIMO CON ARRAY
+***************************************************************************************************
+***************************************************************************************************
+Se crea el tipo de dato que va a manejar el array;
+CREATE OR REPLACE TYPE value_array AS TABLE OF VARCHAR2 (100);
+
+Una vez definido este tipo de datos, podemos utilizarlo para crear una procedure que lo use como entrada. Por ejemplo:
+CREATE OR REPLACE PROCEDURE sample_using_arrays (tx_values IN value_array) AS
+-- Variables Internas
+error_desc   VARCHAR (1023);
+BEGIN
+FOR i IN 1 .. tx_values.COUNT
+LOOP
+INSERT INTO sample_table (value)  VALUES (tx_values (i));
+END LOOP;
+
+EXCEPTION
+WHEN OTHERS
+THEN
+error_desc := SUBSTR (SQLERRM, 1, 1023);
+DBMS_OUTPUT.put_line ('Error: ' || error_desc);
+END;
+
+Con esto ya tendremos definido el tipo de datos y un procedure que lo utilice como dato de entrada.
+
+Finalmente, para realizar una prueba ejecutaríamos el siguiente código:
+
+DECLARE     
+tx_values value_array := value_array ('Valor 1', 'Valor 2', 'Valor 3');   
+BEGIN     
+sample_using_arrays (tx_values);   
+END;
+
+En un bloque anónimo quedaría así:
+CREATE OR REPLACE TYPE trafos_estado AS TABLE OF VARCHAR2 (100);
+declare
+
+--SE CREA VARIABLE DEL TIPO QUE HEMOS CREADO
+trf_estados trafos_estado := trafos_estado('65000001NO','65000002SI','65000003NO','65000004NO','65000005SI','65000006NO','65000007SI');
+
+v_cod_trafo varchar2(8);
+v_pci_activo varchar2(8);
+v_activo varchar2(2);
+begin
+
+  --SE RECORRE LA VARIABLE POR INDICE
+  for i in 1..trf_estados.count loop
+    --SE OBTIENEN LOS VALORES NECESARIOS CON EL ÍNDICE ACTUAL
+    v_cod_trafo := substr(trf_estados(i), 0, 8);
+    v_pci_activo := substr(trf_estados(i), 9);
+    v_activo := 'SI';
+    if v_pci_activo = 'NO' then
+      v_activo := 'NO';
+    end if;
+    update arbol_trf_sgc ar set ar.pci_activo = v_activo where to_char(ar.codigo_trafo) = to_char(v_cod_trafo);
+    commit;
+    dbms_output.put_line(trf_estados(i) || ' ' || v_cod_trafo || ' ' || v_pci_activo || ' ' || v_activo);
+  end loop;
+  
+end;

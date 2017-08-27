@@ -1,0 +1,9 @@
+***************************************************************************************************
+***************************************************************************************************
+******************************************************SOLUCIÓN PROBLEMA Row size too large (> 8126)
+Descripción problema: Row size too large (> 8126). Changing some columns to TEXT or BLOB or using ROW_FORMAT=DYNAMIC or ROW_FORMAT=COMPRESSED
+SOLUCIÓN: Configurar archivo .ini ó .cnf de MYSQL con los parámetros
+max_allowed_packet = 1G
+innodb_log_file_size = 2G
+innodb_log_buffer_size = 512M
+Then, restart mysqld.

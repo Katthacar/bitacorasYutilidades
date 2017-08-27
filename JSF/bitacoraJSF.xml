@@ -1,0 +1,201 @@
+***************************************************************************************************
+***************************************************************************************************
+*************************************************************************VALIDATOR PARA CAMPO VACÍO
+//En la vista:
+<p:outputLabel for="txtNombre" value="Nombre"/>
+    <p:inputText id="txtNombre" value="#{usuarioBean.usuario.nombre}">
+        <f:validator validatorId="validatorVacio"/> este id debe coincidir con el valor en la anotación @FacesValidator
+    </p:inputText>
+</p:outputLabel>
+
+//Luego crear una clase java que implemente la interfaz Validator. Ejemplo de validación de campo vacío:
+@FacesValidator("validatorVacio")
+public class ValidatorVacio implements Validator{
+
+    @Override
+    public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+        String label;
+        //parseo el componente a un componente inputText
+        HtmlInputText htmlInputText = (HtmlInputText)component;
+        //si label no esta definido o es vacío la variable label toma el valor id del componente
+        if(htmlInputText.getLabel() == null || htmlInputText.getLabel().trim().equals("")){
+            label = htmlInputText.getId();
+            //sino, label toma el valor del attr label del componente
+        }else{
+            label = htmlInputText.getLabel();
+        }
+        
+        //validando que campo no esté vacío
+        if(value.toString().trim().equals("")){
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", label + " es obligatorio"));
+        }
+    }
+
+
+***************************************************************************************************
+***************************************************************************************************
+***********************************************************************VALIDATOR PARA FORMATO EMAIL
+
+<p:outputLabel for="txtEmail" value="Email"/>
+    <p:inputText id="txtEmail" value="#{usuarioBean.usuario.correoElectronico}">
+        <f:validator validatorId="validatorEmail"/>
+    </p:inputText>
+</p:outputLabel>
+
+public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+        String label;
+        //parseo htmlInputText a un componente inputText
+        HtmlInputText htmlInputText = (HtmlInputText) component;
+        
+        //si label no está definido o es vacío, la variable label toma el valor id del componente
+        if(htmlInputText.getLabel() == null || htmlInputText.getLabel().trim().equals("")){
+            label = htmlInputText.getId();
+            //sino, label toma el valor del attr label del componente
+        }else{
+            label = htmlInputText.getLabel();
+        }
+        
+        //validando formato de email
+        Pattern pattern = Pattern.compile("^[_a-z0-9]+(\\.[_a-z0-9]+)*@[a-z0-9-]+(\\.[a-z-9-]+)*(\\.[a-z]{2,3})$");
+        Matcher matcher = pattern.matcher((CharSequence) value);
+        
+        if(!matcher.matches()){
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Email no coincide con formato de email!"));
+        }
+
+//**************************************************************
+//CERRANDO SESIÓN A CIERTO TIEMPO DE NO HACER MOVIMIENTOS
+//estas sentencias se crean en el contructor
+HttpSession httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+httpSession.setMaxInactiveInterval(15);
+
+//**************************************************************
+//CREAR SESIÓN AL LOGUEAR
+HttpSession httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+httpSession.setAttribute("correoElectronico", email);
+
+//CERRANDO SESIÓN MANUALMENTE
+HttpSession httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+httpSession.invalidate();
+
+//**************************************************************
+//FILTROS PARA LOS BEAN DE SESIÓN (RESTRINGIR LAS URL PARA LOS USUARIOS QUE NO ESTÉN LOGUEADOS)
+//Crear una clase utilitaria que implemente de Filter
+package util;
+
+import java.io.IOException;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+//Con la sg. anotación se define a que url se va a aplicar
+//en este caso se aplicará a todas las url que terminen en xhtml
+@WebFilter("*.xhtml")
+public class FiltroUrlSession implements Filter{
+    
+    FilterConfig filterConfig;
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        this.filterConfig = filterConfig;
+    }
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        HttpSession session = httpServletRequest.getSession(true);
+        
+        //si la sesión tiene el atributo correoElectronico y proviene de una url diferente a index.xhtml
+        //se va a direccionar a index.xhmtl
+        String requestUrl = httpServletRequest.getRequestURL().toString();
+        if(session.getAttribute("correoElectronico") == null && !requestUrl.contains("index.xhtml")){
+            httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/faces/index.xhtml");
+        }else{
+            chain.doFilter(request, response);
+        }
+    }
+
+    @Override
+    public void destroy() {
+        filterConfig = null;
+    }
+}
+
+//**************************************************************
+//Subiendo archivo al servidor
+//en un managed bean implementar lo siguiente:
+public void updateAvatar() throws IOException{
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+        
+        try{
+            //validando tamaño de archivo
+            if(avatar.getSize() <= 0){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "ERROR!", "Debe seleccionar un archivo .png"));
+                return;
+            }
+            //si avatar es mayor que 2Mb
+            if(avatar.getSize() > 2097152){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "ERROR!", "Debe seleccionar un archivo no superior a 2Mb"));
+                return;
+            }
+            //validando extensión del archivo
+            if(!avatar.getFileName().endsWith(".png")){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "ERROR!", "Debe seleccionar un archivo con extensión .png"));
+                return;
+            }
+            ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+            //definiendo carpeta
+            //Se debe crear la carpeta manualmente en el build/web del proyecto, en este caso, por ejemplo:
+            //G:\practicasPersonales\appAgendaJSF\appAgendaJava\build\web
+            String carpetaAvatar = (String)servletContext.getRealPath("/avatar");
+            //definiendo nombre del archivo a guardar por el cód. de usuario
+            outputStream = new FileOutputStream(new File(carpetaAvatar+"/"+usuario.getCodigoUsuario()+".png"));
+            //leyendo archivo
+            inputStream = avatar.getInputstream();
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            while((read = inputStream.read(bytes)) != -1){
+                outputStream.write(bytes, 0, read);
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "CORRECTO!", "Avatar cargado correctamente"));
+        }catch(Exception ex){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,
+                    "ERROR!", "Error en el sistema: " + ex));
+        }finally{
+            if(inputStream != null){
+                inputStream.close();
+            }
+            if(outputStream != null){
+                outputStream.close();
+            }
+        }
+    }
+ //En la vista implementar lo sg:
+ <!--Frm para subir avatar-->
+                <h:form id="frmEditAvatar" enctype="multipart/form-data">
+                    <p:dialog widgetVar="dlgEditAvatar" header="Actualizar avatar" modal="true">
+                        <h:inputHidden value="#{usuarioBean.usuario.codigoUsuario}"/>
+                        <p:fileUpload id="txtAvatar" mode="simple" value="#{usuarioBean.avatar}"/>
+                        <p:commandButton id="btnUpdateAvatar" value="Enviar" ajax="false" actionListener="#{usuarioBean.updateAvatar}"/>
+                    </p:dialog>
+                </h:form>
+				
+//**************************************************************
+//Para mostrar el avatar en la vista:
+<p:column headerText="Avatar">
+                            <p:graphicImage value="#{facesContext.getCurrentInstance().getExternalContext()}/avatar/#{item.codigoUsuario}.png" 
+                                            alt="Sin definir" cache="false" width="50" height="50"/>
+                        </p:column>

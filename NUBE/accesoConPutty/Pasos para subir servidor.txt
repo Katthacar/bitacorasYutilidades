@@ -1,0 +1,10 @@
+1) Ejecutar putty.
+2) Ingresar IP del servidor: ec2-user@54.187.129.20
+3) Agregar ruta de llave en Connection -> SSH -> Auth.
+En este caso el archivo llamado "RGALinuxServerPrivate.ppk" para acceder al servidor
+4) Check a Allow attempted changes of username in SSH-2
+5) Click en open
+6) Ejecutar sudo reboot
+7) Volver a ingresar, pasos 1 al 4.
+8) Ejecutar ./iniciar.sh para levantar glassfish y svn.
+* Ejecutar archivo.sh: Escribir en consola sh nombreArchivo.sh
