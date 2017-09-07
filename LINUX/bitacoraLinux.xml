@@ -409,3 +409,34 @@ alias angular='cd /cygdrive/c/Users/developeracer/Documents/WebStormProjects/dev
 
 -Mostrar los alias:
 > alias
+
+***************************************************************************************************
+***************************************************************************************************
+****************************************************************INSTALAR Y CONFIGURAR VNC EN UBUNTU
+***************************************************************************************************
+***************************************************************************************************
+** Referencias: 
+https://www.youtube.com/watch?v=f-NS4IM3NEI
+https://tjosm.com/5219/install-remote-desktop-vnc-ubuntu-16-04-server/
+Change password VNC: https://linux.die.net/man/1/vncpasswd
+-Ejecutar en consola:
+> apt install xfce4 xfce4-goodies tightvncserver
+> vncserver
+Pedirá un password y una validación, luego preguntará si se setea un password para view, responder no.
+> apt install synaptic
+> apt update
+> apt upgrade
+> vncserver -kill :1
+> mv ~/.vnc/xstartup ~/.vnc/xstartup.bak
+-Editar xstartup con nano:
+> nano ~/.vnc/xstartup
+-Agregar las sig. líneas, guardar y cerrar:
+#!/bin/bash
+xrdb $HOME/.Xresources
+startxfce4 &
+> chmod +x ~/.vnc/xstartup
+> vncserver
+** Al terminar se mostrará en pantalla la ip para la conexión, por ejemplo:
+New 'X' desktop is vmi106754.contaboserver.net:1
+-Abrir el vncviewer y conectarse con dicha ip y poner password cuando lo pida
+-Al abrirse la ventana por primera vez, seleccionar "Use default config"

@@ -127,18 +127,24 @@ $JBOSS_HOME/standalone/configuration/standalone-full-ha.xml
 $JBOSS_HOME/standalone/configuration/standalone-full.xml
 Una vez abierto el fichero, por ejemplo con vi, tendréis que buscar la entrada siguiente:
 
-jboss.bind.address.management
+<interface name="management">
+	<inet-address value="${jboss.bind.address.management:127.0.0.1}"/>
+</interface>
 
-Como véis, mi interfaz administrativa apunta a 127.0.0.1. La IP del servidor de Jboss es 192.168.2.101. Por lo tanto, cambiaremos:
+<interface name="public">
+	<inet-address value="${jboss.bind.address:0.0.0.0}"/>
+</interface>
 
-jboss.bind.address.management:127.0.0.1
-Por esto:
+y debe cambiarse por lo sig:
 
-jboss.bind.address.management:192.168.2.101
-Reiniciamos el servidor de aplicaciones. Una vez iniciado, desde nuestro ordenador intentamos acceder a la interfaz web. En el navegador ponemos:
+<interface name="management">
+	<any-address/>
+</interface>
+<interface name="public">
+	<any-address/>
+</interface>
 
-http://192.168.2.101:9990/console
-
+Reiniciamos el servidor de aplicaciones. Una vez iniciado, desde nuestro ordenador intentamos acceder a la interfaz web.
 
 ***************************************************************************************************
 ***************************************************************************************************
