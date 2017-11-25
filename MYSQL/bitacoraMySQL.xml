@@ -7,3 +7,44 @@ max_allowed_packet = 1G
 innodb_log_file_size = 2G
 innodb_log_buffer_size = 512M
 Then, restart mysqld.
+
+
+***************************************************************************************************
+***************************************************************************************************
+*************************SOLUCIÓN PROBLEMA "ERROR 1524 (HY000): Plugin 'unix_socket' is not loaded"
+The "unix_socket" has been called by mysql authentication process (maybe related to a partial migration of database to mariadb, now removed). 
+To get all stuff back working go su:
+
+sudo su
+then follow:
+
+/etc/init.d/mysql stop
+mysqld_safe --skip-grant-tables &
+mysql -uroot
+This will completely stop mysql, bypass user authentication (no password needed) and connect to mysql with user "root".
+
+Now, in mysql console, go using mysql administrative db:
+
+use mysql;
+To reset root password to mynewpassword (change it at your wish), just to be sure of it:
+
+update user set password=PASSWORD("mynewpassword") where User='root';
+And this one will overwrite authentication method, remove the unix_socket request (and everything else), restoring a normal and working password method:
+
+update user set plugin="mysql_native_password";
+Exit mysql console:
+
+quit;
+Stop and start everything related to mysql:
+
+/etc/init.d/mysql stop
+kill -9 $(pgrep mysql)
+/etc/init.d/mysql start
+Don't forget to exit the su mode.
+
+Now mySQL server is up and running. You can login it with root:
+
+mysql -u root -p
+
+***************************************************************************************************
+***************************************************************************************************

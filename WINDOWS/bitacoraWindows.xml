@@ -1,0 +1,58 @@
+***************************************************************************************************
+***************************************************************************************************
+***********************************************************************************PROTEGER CARPETA
+1) Crear archivo llamado pass.bat con el sig. contenido:
+cls
+@ECHO OFF
+title HaderCarrilloBernal
+if EXIST "Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}" goto UNLOCK
+if NOT EXIST MyFolder goto MDMyFolder
+:CONFIRM
+echo Quieres proteger esta carpeta? (Y/N)
+set/p "cho=>"
+if %cho%==Y goto LOCK
+if %cho%==y goto LOCK
+if %cho%==n goto END
+if %cho%==N goto END
+echo Invalid choice.
+goto CONFIRM
+:LOCK
+Ren MyFolder "Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}"
+attrib +h +s "Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}"
+echo Folder locked
+goto End
+:UNLOCK
+echo Ingresa la contraseña para mostrar la carpeta
+set/p "pass=>"
+if NOT %pass%== Hayka_2612 goto FAIL
+attrib -h -s "Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}"
+ren "Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}" MyFolder
+echo Folder Unlocked successfully
+goto End
+:FAIL
+echo Invalid password
+goto end
+:MDMyFolder
+md MyFolder
+echo MyFolder created successfully
+goto End
+:End
+
+NOTA:  En este caso la contraseña predeterminada es Hayka_2612, la cual tú puedes cambiar en el código con tu propia contraseña.
+
+2) No olvides donde guardaste el archivo (puede ser en el escritorio por ejemplo), ve a ahí, 
+y has doble clic sobre el archivo pass.bat que fue creado, el cual te creara una carpeta llamada “MyFolder”.
+
+3) Ahora copia y pega tus documentos y carpetas que tu considera confidenciales a la carpeta “MyFolder”, 
+nuevamente has doble clic en el archivo creado y se te abrirá una venta CMD confirmando si se desea o no proteger la carpeta.
+
+4) Pulsa la tecla “Y” y enter para bloquear la carpeta, como puedes ver la carpeta desapareció. 
+Para mostrar la carpeta de nuevo has doble clic sobre el archivo pass.bat , esta vez se te abrirá una ventana CMD pidiendo que digites la contraseña
+
+******Consejos importantes:
+*Una vez ocultada la carpeta, quita de ese lugar el archivo pass.bat y pégalo en tu memoria flash o 
+en otra ruta y cuando quieras desbloquear pégalo de nuevo donde está la carpeta oculta.
+*Para guardarlos usa un nombre que no llame la atención, en mi caso para fines demostrativos use el nombre pass, 
+pero puedes usar otro que no llame la atención.
+*Es recomendable que copies y no cortes los archivos a la carpeta “MyFolder”; no lo elimines sin antes haber testeado, 
+ya que si no realizas correctamente el tutorial puedes perder tus archivos.
